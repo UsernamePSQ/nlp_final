@@ -1,0 +1,24 @@
+T1	Task 12 40	represent scale interactions
+T2	Process 44 81	weather and climate prediction models
+T3	Material 140 155	adaptive meshes
+T4	Process 167 179	R-adaptivity
+T5	Process 182 201	mesh redistribution
+T6	Process 213 229	deforming a mesh
+T7	Process 293 314	atmospheric modelling
+T8	Process 408 418	adaptivity
+T9	Process 445 475	altering the mesh connectivity
+T10	Material 610 616	meshes
+T11	Process 715 734	Variational methods
+T12	Process 805 822	r-adaptive meshes
+T13	Process 874 895	Monge–Ampère equation
+T14	Material 911 942	optimally transported (OT) mesh
+T15	Process 954 984	scalar valued monitor function
+T16	Process 1005 1031	r-adaptive mesh generation
+T17	Material 1055 1059	mesh
+T18	Process 1094 1110	monitor function
+T19	Process 1132 1145	mesh tangling
+T20	Material 1205 1211	sphere
+T21	Process 1254 1266	Monge–Ampère
+T22	Material 1338 1344	sphere
+T23	Task 1375 1405	weather and climate prediction
+T24	Process 1412 1424	r-adaptivity

@@ -1,0 +1,16 @@
+T1	Task 90 114	problem of cell tracking
+T2	Task 119 158	introduce our approach to cell tracking
+T3	Process 195 213	mathematical model
+T4	Material 217 245	experimental image data sets
+T5	Process 262 291	geometric evolution law model
+T6	Process 478 487	our model
+T7	Process 497 518	phase field framework
+T8	Task 594 615	cell tracking problem
+T9	Task 621 657	PDE constrained optimisation problem
+T10	Process 686 695	algorithm
+T11	Task 722 758	PDE constrained optimisation problem
+T12	Process 859 898	theoretical and computational framework
+T13	Material 926 952	multi-cell image data sets
+T14	Material 957 976	raw image data sets
+T15	Process 1009 1021	segmentation
+T16	Material 1112 1127	image data sets

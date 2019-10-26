@@ -1,0 +1,20 @@
+T1	Process 22 49	aperture Z-scan experiments
+T2	Task 69 90	saturation absorption
+T3	Material 117 122	water
+T4	Material 181 197	primary alcohols
+T5	Material 215 246	1560nm femtosecond laser pulses
+T6	Material 292 307	optical-chopper
+T7	Process 313 343	vibrational combination states
+T8	Material 351 359	alcohols
+T9	Material 379 413	femtosecond laser pulses at 1560nm
+T10	Process 445 455	absorption
+T11	Material 482 491	molecules
+T12	Process 519 542	non-radiative processes
+T13	Process 564 589	transient thermal effects
+T14	Process 597 622	transient thermal effects
+T15	Process 642 667	pure optical nonlinearity
+T16	Process 744 769	transient thermal effects
+T17	Material 813 840	high repetition-rate lasers
+T18	Process 854 879	cumulative thermal effect
+T19	Task 905 943	measure this cumulative thermal effect
+T20	Process 953 1000	mode-mismatched two-color pump–probe experiment

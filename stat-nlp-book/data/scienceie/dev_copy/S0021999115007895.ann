@@ -1,0 +1,19 @@
+T1	Task 0 42	The dynamics of various physical phenomena
+T2	Material 68 77	pendulums
+T3	Material 79 86	planets
+T4	Material 91 102	water waves
+T5	Process 125 146	variational framework
+T6	Process 167 189	variational principles
+T7	Process 317 325	approach
+T8	Process 352 372	dynamics of a system
+T9	Process 378 395	single functional
+T10	Process 402 412	Lagrangian
+T11	Process 427 442	action integral
+T12	Process 444 465	Hamiltonian mechanics
+T13	Process 471 508	reformulation of Lagrangian mechanics
+T14	Material 537 546	framework
+T15	Task 550 591	study the symmetry properties of a system
+T16	Process 707 726	Hamiltonian systems
+T17	Process 776 782	system
+T18	Process 892 911	Hamiltonian systems
+T19	Task 942 965	numerical approximation
