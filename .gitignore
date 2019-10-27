@@ -13,6 +13,7 @@
 *.log
 *.log.*
 *.sig
+*.vec
 
 pkg/
 src/
