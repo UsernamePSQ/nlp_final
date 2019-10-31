@@ -17,12 +17,12 @@ T16	Process 772 799	group contribution approach
 T17	Process 801 807	SAFT-γ
 T18	Process 864 868	SAFT
 T19	Process 880 895	closed form EoS
-T20	Process 947 960	Mie potential
-T21	Process 985 1000	(m,n) potential
-T22	Process 1028 1040	LJ potential
-T23	Process 1079 1092	Mie potential
-T24	Material 1329 1333	bead
-T25	Material 1431 1436	beads
-T26	Material 1620 1638	isotropic molecule
-T27	Material 1704 1709	fluid
-T28	Material 1936 1949	simple fluids
+T20	Material 1431 1436	beads
+T21	Material 1620 1638	isotropic molecule
+T22	Material 1704 1709	fluid
+T23	Material 1936 1949	simple fluids
+T24	Process 947 960	Mie potential
+T25	Process 985 1000	(m,n) potential
+T26	Process 1028 1040	LJ potential
+T27	Process 1079 1092	Mie potential
+T28	Material 1329 1333	bead

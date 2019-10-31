@@ -12,7 +12,7 @@ T11	Material 312 322	catalyzers
 T12	Material 473 498	AcH, AOH and BAH radicals
 T13	Material 610 627	pyridinyl radical
 T14	Material 660 669	Pyridinyl
-T15	Material 703 712	reductant
-T16	Material 718 727	acridinyl
-T17	Material 740 748	radicals
+T15	Material 718 727	acridinyl
+T16	Material 740 748	radicals
+T17	Material 703 712	reductant
 T18	Task 811 850	reduce carbon dioxide in dark reactions

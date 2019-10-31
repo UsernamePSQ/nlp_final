@@ -7,7 +7,7 @@ T6	Process 224 249	surface tension treatment
 T7	Process 257 310	time-step restrictions resulting from capillary waves
 T8	Process 350 420	restrictions on the numerical time-step resulting from capillary waves
 T9	Process 463 501	numerical treatment of surface tension
-T10	Process 509 524	surface tension
-T11	Task 717 745	treatment of surface tension
-T12	Material 869 884	capillary waves
-T13	Process 914 943	applied numerical methodology
+T12	Process 509 524	surface tension
+T13	Task 717 745	treatment of surface tension
+T15	Task 842 884	spatiotemporal sampling of capillary waves
+T16	Process 914 943	applied numerical methodology

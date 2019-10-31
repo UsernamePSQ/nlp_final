@@ -1,11 +1,11 @@
 T1	Process 2 14	bond failure
 T2	Process 34 56	micro-crack nucleation
-T3	Process 76 163	separation between the adjacent cells in the cellular structure along their common face
-T4	Material 180 192	micro-cracks
-T5	Material 261 265	pore
-T6	Material 394 406	micro-cracks
-T7	Material 483 497	failed surface
-T8	Process 524 542	mathematical graph
+T3	Material 180 192	micro-cracks
+T4	Process 524 542	mathematical graph
+T5	Process 76 163	separation between the adjacent cells in the cellular structure along their common face
+T6	Material 261 265	pore
+T7	Material 394 406	micro-cracks
+T8	Material 483 497	failed surface
 T9	Material 572 584	failed faces
 T10	Material 615 627	failed faces
 T11	Material 659 677	cellular structure

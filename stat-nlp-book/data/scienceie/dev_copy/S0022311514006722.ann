@@ -1,5 +1,5 @@
-T1	Material 0 16	Zirconium alloys
-T2	Material 76 92	nuclear reactors
+T1	Material 76 92	nuclear reactors
+T2	Material 0 16	Zirconium alloys
 T3	Process 191 213	degradation mechanisms
 T4	Process 222 231	oxidation
 T5	Process 279 288	oxidation

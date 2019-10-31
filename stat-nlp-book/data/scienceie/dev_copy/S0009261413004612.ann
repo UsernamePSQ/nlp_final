@@ -6,25 +6,25 @@ T5	Material 300 321	chemical magnetometer
 T6	Process 353 367	magnetic field
 T7	Material 391 407	singlet products
 T8	Material 455 469	chemical yield
-T9	Process 482 483	B
-T10	Process 502 522	magnetic sensitivity
-T11	Process 558 582	magnetic field intensity
-T12	Material 613 626	singlet yield
-T13	Process 655 691	(2)Λs(B)≡∂Φs(B)∂B=∫0∞pre(t)gs(B,t)dt
-T14	Process 697 715	gs(B,t)≡∂fs(B,t)∂B
-T15	Process 726 760	instantaneous magnetic sensitivity
-T16	Process 835 866	realization of the radical pair
+T9	Process 697 715	gs(B,t)≡∂fs(B,t)∂B
+T10	Process 726 760	instantaneous magnetic sensitivity
+T11	Process 502 522	magnetic sensitivity
+T12	Process 558 582	magnetic field intensity
+T13	Material 613 626	singlet yield
+T14	Process 1570 1571	α
+T15	Process 1579 1607	isotropic hyperfine coupling
+T16	Process 482 483	B
 T17	Process 915 928	nuclear spins
-T18	Process 982 995	electron spin
-T19	Process 1009 1031	hyperfine interactions
-T20	Process 1050 1063	electron spin
-T21	Material 1097 1111	spin-1 nucleus
-T22	Material 1118 1126	nitrogen
-T23	Task 1150 1166	chemical compass
-T24	Task 1190 1273	determining the magnetic field direction through anisotropic hyperfine interactions
-T25	Process 1279 1302	analogous configuration
-T26	Material 1318 1334	spin-1/2 nucleus
-T27	Process 1423 1436	nuclear spins
-T28	Process 1531 1562	H=-γeB(S1(z)+S2(z))+|γe|αS→2·I→
-T29	Process 1570 1571	α
-T30	Process 1579 1607	isotropic hyperfine coupling
+T18	Process 835 866	realization of the radical pair
+T19	Process 982 995	electron spin
+T20	Process 1009 1031	hyperfine interactions
+T21	Process 1050 1063	electron spin
+T22	Task 1190 1273	determining the magnetic field direction through anisotropic hyperfine interactions
+T24	Process 1279 1302	analogous configuration
+T25	Task 1150 1166	chemical compass
+T26	Process 655 691	(2)Λs(B)≡∂Φs(B)∂B=∫0∞pre(t)gs(B,t)dt
+T27	Process 1531 1562	H=-γeB(S1(z)+S2(z))+|γe|αS→2·I→
+T28	Process 1423 1436	nuclear spins
+T29	Material 1097 1111	spin-1 nucleus
+T30	Material 1118 1126	nitrogen
+T31	Material 1318 1334	spin-1/2 nucleus

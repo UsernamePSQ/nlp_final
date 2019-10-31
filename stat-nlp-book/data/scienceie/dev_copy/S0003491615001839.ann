@@ -9,8 +9,8 @@ T8	Task 533 554	Klein–Gordon equation
 T9	Process 571 594	van der Waals isotherms
 T10	Process 637 660	thermodynamic limit N→∞
 T11	Process 687 711	Maxwell equal areas rule
-T12	Process 805 809	spin
-T13	Process 829 862	macroscopic thermodynamic systems
-T14	Process 948 979	partition functions of the form
-T15	Process 1028 1066	general equations of state of the form
-T16	Process 1083 1106	class virial expansions
+T12	Process 829 862	macroscopic thermodynamic systems
+T13	Process 1083 1106	class virial expansions
+T14	Process 1028 1066	general equations of state of the form
+T15	Process 948 979	partition functions of the form
+T16	Process 805 809	spin
