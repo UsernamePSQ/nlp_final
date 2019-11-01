@@ -256,7 +256,7 @@ def _remove_refs(data):
             #Check if brackets is purely references
             brack_is_ref = True
             for i in range(start_brack_idx+1,end_brack_idx):
-                if tokens[i] != ',' and not tokens[i].isdigit():
+                if tokens[i] not in [',','–','-'] and not tokens[i].isdigit():
                     brack_is_ref = False
                     break
 
