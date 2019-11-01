@@ -59,7 +59,7 @@ class Abr_identifyer():
                 if req_1 and (req_2_option_1 or req_2_option_2):
                     self.tmp.append(ann_names[entity_number])
                     assert len(self.tmp) <=2
-                    
+
                     # Add if this is second
                     if len(self.tmp) == 2:
                         self.entity_lists[self.txt].append(tuple(self.tmp))
@@ -94,8 +94,10 @@ class List_identifyer():
     def __init__(self):
         self.entity_lists = defaultdict(list)
         self.tmp = []  # Used in 'find_lists
+        self.two_is_a_list = False
 
-    def find_lists(self, data):
+    def find_lists(self, data, two_is_a_list=False):
+        self.two_is_a_list = two_is_a_list
 
         for txt, data_point in data.items():
             self.txt = txt
@@ -169,14 +171,14 @@ class List_identifyer():
         return self.entity_lists
 
     def _add_list_and_reset(self):
+        
+        min_len = 2 + self.two_is_a_list
 
         #If length is minimum 3, add it
-        if len(self.tmp) >= 3:
+        if len(self.tmp) >= min_len:
             self.entity_lists[self.txt].append(self.tmp)
         
         #Reset tmp
         self.tmp = []
 
         return
-
-        
