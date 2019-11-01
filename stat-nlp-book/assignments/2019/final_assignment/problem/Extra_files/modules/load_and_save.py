@@ -220,8 +220,8 @@ def load_scienceie(datadir,remove_refs = True):
                                    'annotation_names': my_ann_names,
                                    'relations': relations}
 
-    print("Number of lines removed due to overlap: {} out of {}".format(total_ann_lines - ann_lines_after_sort, total_ann_lines))
-    print("Number of lines not identified in text: {} out of {}".format(ann_lines_after_sort - ann_lines_after_id, ann_lines_after_sort))
+    print("Number of entities removed due to overlap: {} out of {}".format(total_ann_lines - ann_lines_after_sort, total_ann_lines))
+    print("Number of entities not identified in text: {} out of {}".format(ann_lines_after_sort - ann_lines_after_id, ann_lines_after_sort))
 
     if remove_refs:
         data_wo_refs = _remove_refs(data)
