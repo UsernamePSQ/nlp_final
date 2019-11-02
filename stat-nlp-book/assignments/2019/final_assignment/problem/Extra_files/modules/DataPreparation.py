@@ -12,12 +12,29 @@ def entityLocator(indata):
     i = 0
     flag = 0
     for tag in indata['IOBtags']:
+        # fix for B without O inbetween
         if tag[0] == 'B':
-            name = indata['annotation_names'][name_counter]
-            tg = tag
-            start = i
-            name_counter = name_counter + 1
-            flag = 1 # flag if we are currently inside iob
+            if flag == 0:
+                name = indata['annotation_names'][name_counter]
+                tg = tag
+                start = i
+                name_counter = name_counter + 1
+                flag = 1 # flag if we are currently inside iob
+            else:
+                # This is the case where a B is right next to another B or I of another sort
+                # append before updating
+                end = i-1
+                entities.append((name, tg, start, end))
+                flag = 0
+                # setup new one
+                name = indata['annotation_names'][name_counter]
+                tg = tag
+                start = i
+                name_counter = name_counter + 1
+                flag = 1 # flag if we are currently inside iob
+            #end-if
+        #end-if
+
         if tag[0] == 'O' and flag == 1:
             # if entity ended - submit to entities
             end = i-1
