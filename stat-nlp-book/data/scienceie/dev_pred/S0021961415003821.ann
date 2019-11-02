@@ -31,10 +31,8 @@ T34	Material 1224 1232	CG beads
 T35	Material 1252 1259	alkanes
 T36	Material 1360 1366	carbon
 T24	Material 1525 1532	alkanes
-R1	Hyponym-of Arg1:T15 Arg2:T31	
-R2	Hyponym-of Arg1:T16 Arg2:T31	
-R3	Hyponym-of Arg1:T17 Arg2:T31	
-R4	Hyponym-of Arg1:T18 Arg2:T31	
-R5	Hyponym-of Arg1:T19 Arg2:T31	
-*	Synonym-of T3 T4
-*	Synonym-of T5 T6
+R1	Hyponym-of Arg1:T15 Arg2:T32	
+R2	Hyponym-of Arg1:T16 Arg2:T32	
+R3	Hyponym-of Arg1:T17 Arg2:T32	
+R4	Hyponym-of Arg1:T18 Arg2:T32	
+R5	Hyponym-of Arg1:T19 Arg2:T32	

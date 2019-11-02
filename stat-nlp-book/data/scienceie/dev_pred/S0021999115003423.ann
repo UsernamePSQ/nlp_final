@@ -14,4 +14,3 @@ T13	Task 119 158	introduce our approach to cell tracking
 T14	Process 497 518	phase field framework
 T15	Process 478 487	our model
 T16	Process 1009 1021	segmentation
-R1	Hyponym-of Arg1:T6 Arg2:T7	

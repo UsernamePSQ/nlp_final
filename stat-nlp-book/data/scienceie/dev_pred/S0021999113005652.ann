@@ -65,6 +65,5 @@ T64	Material 730 733	gas
 T65	Material 734 740	liquid
 T66	Material 824 829	water
 T67	Process 2082 2100	gas exchange rates
-R1	Hyponym-of Arg1:T18 Arg2:T17	
 *	Synonym-of T24 T25
 *	Synonym-of T29 T30

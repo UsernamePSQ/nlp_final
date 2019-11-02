@@ -19,6 +19,3 @@ T18	Material 878 897	DRAGON lattice code
 T19	Process 983 990	TSUNAMI
 T20	Material 250 257	reactor
 T21	Process 436 470	two-dimensional lattice geometries
-R1	Hyponym-of Arg1:T2 Arg2:T1	
-R2	Hyponym-of Arg1:T7 Arg2:T6	
-*	Synonym-of T14 T15

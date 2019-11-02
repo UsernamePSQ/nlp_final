@@ -23,5 +23,3 @@ T13	Process 427 447	geometrical features
 T23	Process 471 482	nanocolumns
 T24	Task 1439 1549	prediction of the relation between the incident angle of the deposition flux and the tilt angle of the columns
 T25	Material 67 82	vapor particles
-R1	Hyponym-of Arg1:T3 Arg2:T2	
-R2	Hyponym-of Arg1:T23 Arg2:T13	

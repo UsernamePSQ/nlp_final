@@ -29,6 +29,3 @@ T28	Process 1412 1424	r-adaptivity
 T29	Process 581 616	mapping of solutions between meshes
 T30	Material 1132 1136	mesh
 T31	Task 1172 1211	optimal transport problem on the sphere
-R1	Hyponym-of Arg1:T7 Arg2:T8	
-R2	Hyponym-of Arg1:T11 Arg2:T3	
-R3	Hyponym-of Arg1:T5 Arg2:T11	

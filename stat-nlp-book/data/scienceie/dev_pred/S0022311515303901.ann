@@ -30,8 +30,6 @@ T29	Process 887 919	reduction in mechanical strength
 T30	Process 940 987	nitrogen incorporation during deposit formation
 T31	Process 856 877	excessive weight loss
 T32	Material 219 226	reactor
-R1	Hyponym-of Arg1:T1 Arg2:T2	
-R2	Hyponym-of Arg1:T4 Arg2:T5	
 *	Synonym-of T3 T4
 *	Synonym-of T9 T10
 *	Synonym-of T23 T24
