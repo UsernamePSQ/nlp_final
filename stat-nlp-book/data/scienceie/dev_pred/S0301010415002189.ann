@@ -16,3 +16,5 @@ T15	Task 742 791	derive more accurate non-adiabatic coupling terms
 T16	Material 826 849	photoabsorption spectra
 T17	Process 166 191	obtuse isosceles geometry
 T18	Process 220 239	linear conformation
+R1	Hyponym-of Arg1:T2 Arg2:T3	
+R2	Hyponym-of Arg1:T9 Arg2:T10	

@@ -28,3 +28,8 @@ T28	Material 235 240	metal
 T29	Material 568 579	ambient air
 T30	Material 671 684	metal surface
 T31	Process 715 740	electrochemical processes
+R1	Hyponym-of Arg1:T19 Arg2:T20	
+R2	Hyponym-of Arg1:T18 Arg2:T17	
+*	Synonym-of T8 T9
+*	Synonym-of T11 T12
+*	Synonym-of T26 T27

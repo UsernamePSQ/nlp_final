@@ -75,14 +75,15 @@ def load_scienceie(datadir,remove_refs = True):
     #ann_file_exists = False
     
     data = {}
-    counter = 0
+    n_rels_missed = 0
+    total_rels = 0
 
     total_ann_lines = 0
     ann_lines_after_sort = 0
     ann_lines_after_id = 0
 
     for i in range(len(txt_files)):
-        org_text = load_txt_str(txt_files[i],datadir)
+        org_text = load_txt_str(txt_files[i], datadir)
         tokens, locations = split_txt_str(org_text)
         starting_locations = np.array([loc[0] for loc in locations])
         ending_locations = np.array([loc[1] for loc in locations])
@@ -138,19 +139,25 @@ def load_scienceie(datadir,remove_refs = True):
                 
         
         ### Check if we found all relations
-        if len(rels_found) != len(relations):
-            counter += 1
+        n_rels_missed += len(relations) - len(rels_found)
+        total_rels += len(relations)
+
+        #if len(relations) - len(rels_found) > 0:
+        #    print("Missing relations in: {}".format(txt_files[i]))
+
         ann_lines_after_id += len(my_ann_names)
+
         #Add to output dict
         data[txt_files[i][:-4]] = {'tokens': tokens,
                                    'IOBtags': IOBtags,
                                    'locations':locations,
                                    'annotation_names': my_ann_names,
-                                   'relations': relations,
+                                   'relations': rels_found,
                                    'raw_ann_load' : ann_content}
 
     print("Number of entities removed due to overlap: {} out of {}".format(total_ann_lines - ann_lines_after_sort, total_ann_lines))
     print("Number of entities not identified in text: {} out of {}".format(ann_lines_after_sort - ann_lines_after_id, ann_lines_after_sort))
+    print("Number of relations lost due to overlap: {} out of {}".format(n_rels_missed, total_rels))
 
     if remove_refs:
         data_wo_refs = _remove_refs(data)
@@ -185,15 +192,19 @@ def reformat_to_save(data_w_metadata):
 
 
     #### Add the relations file for file
-    outdata = {}
+    # Initialize outdata (would normaly create defaultdict but need all txt's)
+    all_txt_files = np.unique(np.array([meta[0] for meta in data_w_metadata['metadata']]))
+    outdata = {txt: [] for txt in all_txt_files}
+    
     for txt, relations in data_dict.items():
         
         ####  Add the tags in fron (*,R1,R2 osv.)
         # Convert hyponym_reverted to hyponym
         rel_hyponyms = [[x[0], x[1]] for x in relations if x[2] == 'Hyponym']
         rel_hyponyms += [[x[1], x[0]] for x in relations if x[2] == 'Hyponym_reverted']
+
         # Add R1, R2 osv.
-        rel_hyponyms = [('R' + str(idx), 'Hyponym', rel_hyponyms[idx][0], rel_hyponyms[idx][1]) for idx in range(len(rel_hyponyms))]
+        rel_hyponyms = [('R' + str(idx+1), 'Hyponym', rel_hyponyms[idx][0], rel_hyponyms[idx][1]) for idx in range(len(rel_hyponyms))]
         # Add *
         rel_synonyms = [('*', 'Synonym', x[0], x[1])for x in relations if x[2] == 'Synonym']
 

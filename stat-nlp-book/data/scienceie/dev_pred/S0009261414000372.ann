@@ -25,3 +25,5 @@ T24	Material 1006 1014	molecule
 T25	Material 1018 1024	photon
 T26	Material 1226 1241	chiral mediator
 T27	Material 1270 1286	achiral acceptor
+R1	Hyponym-of Arg1:T4 Arg2:T3	
+*	Synonym-of T7 T8

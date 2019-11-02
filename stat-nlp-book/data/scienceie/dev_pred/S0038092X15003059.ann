@@ -22,3 +22,5 @@ T21	Material 1556 1560	cell
 T22	Task 181 216	calculation of the cell temperature
 T23	Task 17 55	prediction of solar cell’s temperature
 T24	Task 636 666	calculate the cell temperature
+*	Synonym-of T3 T4
+*	Synonym-of T6 T7

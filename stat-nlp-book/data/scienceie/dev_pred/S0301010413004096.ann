@@ -27,3 +27,6 @@ T26	Process 1204 1229	weak binding interactions
 T27	Process 1401 1417	weak interaction
 T28	Task 261 292	static crystallographic studies
 T29	Material 1316 1322	liquid
+R1	Hyponym-of Arg1:T10 Arg2:T11	
+R2	Hyponym-of Arg1:T22 Arg2:T23	
+R3	Hyponym-of Arg1:T26 Arg2:T27	

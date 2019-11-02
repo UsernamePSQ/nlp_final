@@ -17,3 +17,9 @@ T16	Material 740 748	radicals
 T17	Material 703 712	reductant
 T18	Task 811 850	reduce carbon dioxide in dark reactions
 T19	Material 818 832	carbon dioxide
+R1	Hyponym-of Arg1:T2 Arg2:T3	
+R2	Hyponym-of Arg1:T5 Arg2:T6	
+R3	Hyponym-of Arg1:T14 Arg2:T17	
+R4	Hyponym-of Arg1:T15 Arg2:T16	
+R5	Hyponym-of Arg1:T15 Arg2:T17	
+*	Synonym-of T4 T5

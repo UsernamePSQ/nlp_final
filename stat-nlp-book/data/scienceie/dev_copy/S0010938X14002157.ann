@@ -48,14 +48,9 @@ T47	Material 1213 1216	CIs
 R1	Hyponym-of Arg1:T2 Arg2:T1	
 R2	Hyponym-of Arg1:T4 Arg2:T3	
 R4	Hyponym-of Arg1:T15 Arg2:T16	
-R5	Hyponym-of Arg1:T14 Arg2:T17	
-R3	Hyponym-of Arg1:T13 Arg2:T12	
 R6	Hyponym-of Arg1:T10 Arg2:T25	
 R7	Hyponym-of Arg1:T27 Arg2:T28	
 R8	Hyponym-of Arg1:T19 Arg2:T34	
-R9	Hyponym-of Arg1:T21 Arg2:T40	
-R10	Hyponym-of Arg1:T22 Arg2:T39	
-R11	Hyponym-of Arg1:T35 Arg2:T38	
 R12	Hyponym-of Arg1:T36 Arg2:T37	
 R13	Hyponym-of Arg1:T42 Arg2:T41	
 R14	Hyponym-of Arg1:T46 Arg2:T18	

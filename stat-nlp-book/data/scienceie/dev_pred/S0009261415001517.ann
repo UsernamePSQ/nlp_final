@@ -26,3 +26,5 @@ T25	Material 1249 1258	molecules
 T26	Process 1471 1486	optical methods
 T27	Process 270 315	methods, mostly multi-step and time-consuming
 T28	Material 1114 1132	molecular products
+R1	Hyponym-of Arg1:T1 Arg2:T27	
+R2	Hyponym-of Arg1:T2 Arg2:T27	
