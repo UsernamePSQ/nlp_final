@@ -2,7 +2,7 @@
 # Created by https://www.gitignore.io/api/linux,macos,pycharm,windows,jupyternotebooks,visualstudiocode,archlinuxpackages
 # Edit at https://www.gitignore.io/?templates=linux,macos,pycharm,windows,jupyternotebooks,visualstudiocode,archlinuxpackages
 
-stat-nlp-book/data/scienceie/
+stat-nlp-book/data/scienceie
 
 ### ArchLinuxPackages ###
 *.tar

@@ -29,11 +29,13 @@ def _sebastians_dummy_model(data_dict,data_raw):
         if any([(entity_1, entity_2) == syn for syn in abrs]) or any([(entity_2, entity_1) == syn for syn in abrs]):
             predictions.append("Synonym")
         # Check if entities are in hyponyms
-        elif any([(entity_1 == rb[idx]) and (entity_2 in links[idx]) for idx in range(len(links))]):
-            predictions.append("Hyponym")
-        # Dette burde aldrig ske:
-        elif any([(entity_2 == rb[idx]) and (entity_1 in links[idx]) for idx in range(len(links))]):
+        elif any([((entity_1 == rb[idx]) and (entity_2 in links[idx])) for idx in range(len(links))]):
             predictions.append("Hyponym_reverted")
+        # Dette burde aldrig ske:
+        elif any([((entity_2 == rb[idx]) and (entity_1 in links[idx])) for idx in range(len(links))]):
+            raise Exception("This should never happen, because the data-set \
+                            is ordered, and we only let lists be hypernym of previous word")
+            predictions.append("Hyponym")
         # Else none
         else:
             predictions.append("NONE")

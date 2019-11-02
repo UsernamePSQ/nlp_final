@@ -94,10 +94,10 @@ class List_identifyer():
     def __init__(self):
         self.entity_lists = defaultdict(list)
         self.tmp = []  # Used in 'find_lists
-        self.two_is_a_list = False
+        self.min_list_size = 3
 
-    def find_lists(self, data, two_is_a_list=False):
-        self.two_is_a_list = two_is_a_list
+    def find_lists(self, data, min_list_size=3):
+        self.min_list_size = min_list_size
 
         for txt, data_point in data.items():
             self.txt = txt
@@ -172,10 +172,8 @@ class List_identifyer():
 
     def _add_list_and_reset(self):
         
-        min_len = 2 + self.two_is_a_list
-
-        #If length is minimum 3, add it
-        if len(self.tmp) >= min_len:
+        #If length is minimum 'min_list_size', add it
+        if len(self.tmp) >= self.min_list_size:
             self.entity_lists[self.txt].append(self.tmp)
         
         #Reset tmp
