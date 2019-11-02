@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=linux,macos,pycharm,windows,jupyternotebooks,visualstudiocode,archlinuxpackages
 
 stat-nlp-book/data/scienceie
-
+*/__pycache__/*
 ### ArchLinuxPackages ###
 *.tar
 *.tar.*
