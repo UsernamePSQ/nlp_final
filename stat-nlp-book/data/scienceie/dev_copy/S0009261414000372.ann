@@ -20,5 +20,10 @@ T19	Material 58 67	molecules
 T20	Process 119 138	Local field effects
 T21	Material 176 209	nanostructured photonic materials
 T22	Material 904 922	carotenoid species
+T23	Process 1018 1035	photon absorption
+T24	Material 1006 1014	molecule
+T25	Material 1018 1024	photon
 T26	Material 1226 1241	chiral mediator
 T27	Material 1270 1286	achiral acceptor
+R1	Hyponym-of Arg1:T4 Arg2:T3	
+*	Synonym-of T8 T7

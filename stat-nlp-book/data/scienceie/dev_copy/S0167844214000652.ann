@@ -13,3 +13,6 @@ T12	Material 694 706	micro-cracks
 T13	Material 734 739	crack
 T14	Material 772 783	failed face
 T15	Material 830 842	failed faces
+R1	Hyponym-of Arg1:T1 Arg2:T2	
+R2	Hyponym-of Arg1:T1 Arg2:T5	
+R3	Hyponym-of Arg1:T12 Arg2:T13	

@@ -20,3 +20,10 @@ T19	Material 1094 1099	fluid
 T20	Process 1144 1157	LES framework
 T21	Material 1223 1246	non-spherical particles
 T22	Material 153 162	particles
+T23	Material 977 986	particles
+T24	Process 1006 1028	gas–solid channel flow
+T25	Material 1006 1009	gas
+T26	Material 91 100	particles
+R1	Hyponym-of Arg1:T2 Arg2:T3	
+*	Synonym-of T9 T10
+*	Synonym-of T15 T16

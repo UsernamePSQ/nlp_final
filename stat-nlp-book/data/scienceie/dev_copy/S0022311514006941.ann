@@ -1,4 +1,5 @@
 T1	Material 184 208	glass-ceramic wasteforms
+T2	Material 338 351	molybdenum-99
 T3	Material 502 513	crystalline
 T4	Material 544 563	titanate pyrochlore
 T5	Material 565 573	CaUTi2O7
@@ -13,7 +14,9 @@ T13	Material 856 873	glass composition
 T14	Material 977 984	alumina
 T15	Material 1023 1049	zirconolite glass-ceramics
 T16	Material 1063 1075	glass matrix
+T17	Material 1177 1188	crystalline
 T18	Task 1113 1204	investigate the role played by glass composition in controlling crystalline phase stability
+T19	Material 1144 1149	glass
 T20	Material 1235 1249	mineral albite
 T21	Material 1251 1260	NaAlSi3O8
 T22	Material 1283 1289	albite
@@ -26,3 +29,7 @@ T28	Material 77 103	non-classical glass matrix
 T29	Material 579 591	glass matrix
 T30	Material 646 659	glass network
 T31	Material 244 267	Hanford K-basin sludges
+R1	Hyponym-of Arg1:T21 Arg2:T20	
+R2	Hyponym-of Arg1:T22 Arg2:T23	
+*	Synonym-of T4 T5
+*	Synonym-of T10 T11

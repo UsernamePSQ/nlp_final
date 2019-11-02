@@ -10,3 +10,4 @@ T9	Material 409 428	GPGPU architectures
 T10	Material 318 328	processors
 T11	Material 364 382	parallel computers
 T12	Process 548 578	corrects the current potential
+R1	Hyponym-of Arg1:T9 Arg2:T11	

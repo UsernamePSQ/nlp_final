@@ -24,3 +24,16 @@ T23	Material 947 960	host material
 T24	Task 729 781	enhance the Curie temperature above room temperature
 T25	Material 393 414	un-paired d electrons
 T26	Material 645 654	electrons
+R1	Hyponym-of Arg1:T5 Arg2:T6	
+R2	Hyponym-of Arg1:T9 Arg2:T8	
+R3	Hyponym-of Arg1:T15 Arg2:T23	
+R4	Hyponym-of Arg1:T16 Arg2:T23	
+R5	Hyponym-of Arg1:T17 Arg2:T23	
+R6	Hyponym-of Arg1:T18 Arg2:T23	
+R7	Hyponym-of Arg1:T19 Arg2:T23	
+R8	Hyponym-of Arg1:T20 Arg2:T23	
+R9	Hyponym-of Arg1:T21 Arg2:T23	
+R10	Hyponym-of Arg1:T22 Arg2:T23	
+*	Synonym-of T4 T5
+*	Synonym-of T1 T2
+*	Synonym-of T14 T23

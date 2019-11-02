@@ -29,3 +29,8 @@ T28	Material 399 403	fuel
 T29	Process 481 487	burnup
 T30	Material 409 417	actinide
 T31	Process 789 795	burnup
+R1	Hyponym-of Arg1:T1 Arg2:T2	
+*	Synonym-of T7 T6
+*	Synonym-of T8 T9
+*	Synonym-of T11 T12
+*	Synonym-of T20 T21

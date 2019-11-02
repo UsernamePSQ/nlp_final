@@ -19,7 +19,12 @@ T18	Process 853 894	superconductivity at a Josephson junction
 T19	Process 969 991	Caldeira-Leggett model
 T20	Process 176 225	multidimensional asymmetric double well potential
 T21	Process 274 285	CCS methods
+T22	Process 336 361	configuration interaction
+T23	Process 363 365	CI
 T24	Process 732 746	harmonic modes
 T25	Task 821 828	physics
 T26	Process 1026 1060	magnetic and conductance phenomena
 T27	Task 1068 1084	spin-bath regime
+*	Synonym-of T8 T7
+*	Synonym-of T11 T10
+*	Synonym-of T22 T23

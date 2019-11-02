@@ -4,31 +4,45 @@ import os
 from os.path import join
 from os import listdir
 import re
+from collections import defaultdict
 
 def save_to_ann(data, datadfir):
     """
     This function saves the relations (and only these) to a file.
     Args:
-        data: {'metadata' [], 'data_X': [], 'data_Y': []}
+        data: {'txt': {'relations': [('R5', 'Hyponym', 'T14', 'T17'), ('*', 'Synonym', 'T20', 'T19')]}}
         datadir: The directory to save to, e.g. data/scienceie/predictions
     """
 
-    # Subset only those which are not NONE
-    data_Y = np.array(data['data_Y'])
-    mask = (data_Y != 'NONE')
+    for txt, df in data.items():
+        
+        ### Extract raw lines from .ann but without hyponyms and synonyms
+        ann_content = df['raw_ann_load']
+        lines_wo_rel = [line for line in ann_content if line[0] == 'T']
 
-    metadata = np.array(data['metadata'])[mask]
-    data_Y = np.array(data['data_Y'])[mask]
+        ### Extract relations
+        relations = df['relations']
+        hyponyms = [rel for rel in relations if rel[1] == 'Hyponym']
+        synonyms = [rel for rel in relations if rel[1] == 'Synonym']
 
-    # Reshape to the dictionary: 
-    # data_dict[txt] = [(*,T1,T2,'Synonym'),(R1,T3,T4,'Hyponym')]
-    
-    data_dict = dict([(metadata[0][idx],(metadata[1][idx],metadata[2][idx],data_Y[idx])) for idx in len(data_Y)])
-    
-    ## Save the shit
-    
-    pass
+        ### Create the correct lines
+        hyp_lines = [hyp[0] + '\tHyponym-of Arg1:' + str(hyp[2]) + ' Arg2:' + str(hyp[3]) + '\t\n' for hyp in hyponyms]
+        syn_lines = ['*\tSynonym-of ' + str(syn[2]) + ' ' + str(syn[3]) + '\n' for syn in synonyms]
+        all_rel_lines = hyp_lines + syn_lines
 
+        ### Create folder if doesn't exist
+        prediction_dir = datadfir
+        if not os.path.exists(prediction_dir):
+            os.makedirs(prediction_dir)
+
+        ### Save the lines
+        all_lines = lines_wo_rel + all_rel_lines
+        fname = join(datadfir, txt + '.ann')
+        with open(fname, 'w') as file:
+            for line in all_lines:
+                file.write(line)
+
+    return
 
 def load_scienceie(datadir,remove_refs = True):
     """
@@ -110,7 +124,7 @@ def load_scienceie(datadir,remove_refs = True):
 
             #extract synonym/hyponyms and add them to data
             non_entity = [line for line in ann_content if line[0] != 'T']
-            non_entity_split = [re.split(r'[\- :\t]',line.rstrip()) for line in non_entity]
+            non_entity_split = [re.split(r'[\- :\t]', line.rstrip()) for line in non_entity]
 
             remove = ['','of','Arg1','Arg2']
             relations = [tuple(token for token in line if token not in remove) for line in non_entity_split]
@@ -130,7 +144,8 @@ def load_scienceie(datadir,remove_refs = True):
                                    'IOBtags': IOBtags,
                                    'locations':locations,
                                    'annotation_names': my_ann_names,
-                                   'relations': relations}
+                                   'relations': relations,
+                                   'raw_ann_load' : ann_content}
 
     print("Number of entities removed due to overlap: {} out of {}".format(total_ann_lines - ann_lines_after_sort, total_ann_lines))
     print("Number of entities not identified in text: {} out of {}".format(ann_lines_after_sort - ann_lines_after_id, ann_lines_after_sort))
@@ -141,6 +156,50 @@ def load_scienceie(datadir,remove_refs = True):
         return data_wo_refs
     else:
         return data
+
+def reformat_to_save(data_w_metadata):
+    '''
+    This transforms the data back from tf-output to dev_data
+
+    Input: data_w_metadata = {'metadata':[],data_Y:[]}
+    Output: outdata = {'txt': {'relations': [('R5', 'Hyponym', 'T14', 'T17'), ('*', 'Synonym', 'T20', 'T19')]}}
+    '''
+
+    #### 
+
+    # Subset only those which are not NONE
+    data_Y = np.array(data['data_Y'])
+    mask = (data_Y != 'NONE')
+
+    metadata = np.array(data['metadata'])[mask]
+    data_Y = np.array(data['data_Y'])[mask]
+
+    # Reshape to the dictionary: 
+    # data_dict[txt] = [[T1,T2,'Synonym'],[T3,T4,'Hyponym']]
+    tmp = [(metadata[0][idx], [metadata[1][idx],metadata[2][idx],data_Y[idx]]) for idx in len(data_Y)]
+    data_dict = defaultdict(list)
+    for k, v in tmp:
+        data_dict[k].append(v)
+
+
+    #### Add the relations file for file
+    outdata = {}
+    for txt, relations in data_dict.items():
+        
+        ####  Add the tags in fron (*,R1,R2 osv.)
+        # Convert hyponym_reverted to hyponym
+        rel_hyponyms = [[x[0],x[1]] for x in relations if x[2] == 'Hyponym']
+        rel_hyponyms += [[x[1],x[0]] for x in relations if x[2] == 'Hyponym_reverted']
+        # Add R1, R2 osv.
+        rel_hyponyms = [('R' + str(idx), 'Hyponym', rel_hyponyms[idx][0], rel_hyponyms[idx][1]) for idx in range(len(rel_hyponyms))]
+        # Add *
+        rel_synonyms = [('*', 'Synonym', x[0], x[1])for x in relations if x[2] == 'Synonym']
+
+        all_relations = rel_hyponyms + rel_synonyms
+
+        outdata[txt] = all_relations
+
+    return outdata
 
 def _remove_refs(data):
     counter = 0

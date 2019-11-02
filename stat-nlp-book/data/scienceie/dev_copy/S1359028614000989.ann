@@ -18,3 +18,8 @@ T17	Process 276 293	network of models
 T18	Task 1064 1075	informatics
 T19	Task 1077 1086	analytics
 T20	Task 1021 1062	Laboratory and real-world experimentation
+R1	Hyponym-of Arg1:T9 Arg2:T16	
+R2	Hyponym-of Arg1:T20 Arg2:T12	
+R3	Hyponym-of Arg1:T18 Arg2:T12	
+R4	Hyponym-of Arg1:T19 Arg2:T12	
+R5	Hyponym-of Arg1:T10 Arg2:T12	

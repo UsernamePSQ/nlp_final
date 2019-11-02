@@ -23,3 +23,7 @@ T22	Material 1323 1331	particle
 T23	Material 1441 1449	particle
 T24	Process 1136 1157	soft sphere collision
 T25	Process 1497 1519	hard sphere collisions
+R1	Hyponym-of Arg1:T19 Arg2:T13	
+R2	Hyponym-of Arg1:T18 Arg2:T17	
+R3	Hyponym-of Arg1:T20 Arg2:T17	
+R4	Hyponym-of Arg1:T16 Arg2:T17	
