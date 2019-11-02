@@ -1,4 +1,4 @@
-
+import numpy as np
 
 def concatenate_ie_eg(data):
     '''
@@ -67,3 +67,28 @@ def concatenate_ie_eg(data):
     #End txt loop
 
     return data
+
+
+def dot_in_sentence_mask(data):
+
+    data_size = len(data['data_Y'])
+
+    mask = np.zeros(data_size, dtype=bool)
+    for idx in range(data_size):
+        data_point = data['data_X'][idx]
+
+        # Tjek if '.' in data
+        words = [x[0] for x in data_point]
+        if '.' not in words:
+            continue
+
+        # Ensure 'next_word' is within range
+        next_word_idx = words.index('.') + 1
+        if next_word_idx >= len(words):
+            continue
+
+        next_word = words[next_word_idx]
+        if next_word[0].isupper():
+            mask[idx] = True
+
+    return mask
