@@ -1,0 +1,47 @@
+T1	Material 2 12	surfactant
+T2	Material 18 38	surface active agent
+T3	Material 55 65	surfactant
+T4	Material 88 130	compounds which improve the dispersability
+T5	Material 248 265	metallic material
+T6	Task 309 329	corrosion protection
+T7	Task 104 130	improve the dispersability
+T8	Material 138 140	CI
+T9	Material 148 152	acid
+T10	Material 550 572	nonylphenol ethoxylate
+T11	Material 574 577	NPE
+T12	Material 470 481	surfactants
+T13	Material 520 543	alkylphenol ethoxylates
+T14	Material 760 785	quaternary ammonium salts
+T15	Material 790 814	amines (when protonated)
+T16	Material 850 876	cationic surfactants class
+T17	Material 850 876	cationic surfactants class
+T19	Material 1281 1308	N-dodecylpyridinium bromide
+T20	Material 1310 1314	DDPB
+T21	Material 1335 1352	Anionic sulphates
+T22	Material 1354 1373	anionic sulphonates
+T23	Material 608 612	NPEs
+T24	Material 393 433	surfactant or active corrosion inhibitor
+T25	Material 470 481	surfactants
+T26	Material 702 729	ethoxylated linear alcohols
+T27	Material 932 938	amines
+T28	Material 958 968	surfactant
+T29	Process 976 992	protonated state
+T30	Material 1045 1074	quaternary ammonium compounds
+T31	Material 1103 1108	quats
+T32	Material 1133 1172	Long-chain quaternary ammonium bromides
+T33	Material 1221 1236	steel materials
+T34	Material 1266 1276	surfactant
+T35	Material 1375 1405	alkoxylated alkylphenol resins
+T36	Material 1411 1443	polyoxyethylene sorbitan oleates
+T37	Material 1460 1471	surfactants
+T38	Material 1460 1471	surfactants
+T39	Material 1460 1471	surfactants
+T40	Material 1460 1471	surfactants
+T41	Material 1513 1523	surfactant
+T42	Material 1529 1608	blend of polyethylene glycol esters of fatty acids and ethoxylated alkylphenols
+T43	Material 1639 1650	surfactants
+T44	Material 157 168	emulsifiers
+T45	Material 179 197	dispersed emulsion
+T46	Material 888 894	cation
+T18	Material 902 923	surface active specie
+T47	Material 1213 1216	CIs

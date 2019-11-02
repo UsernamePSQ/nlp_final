@@ -15,7 +15,9 @@ def save_to_ann(data, datadfir):
     """
 
     for txt, df in data.items():
-        
+
+        #print(df.keys())
+
         ### Extract raw lines from .ann but without hyponyms and synonyms
         ann_content = df['raw_ann_load']
         lines_wo_rel = [line for line in ann_content if line[0] == 'T']
@@ -168,15 +170,15 @@ def reformat_to_save(data_w_metadata):
     #### 
 
     # Subset only those which are not NONE
-    data_Y = np.array(data['data_Y'])
+    data_Y = np.array(data_w_metadata['data_Y'])
     mask = (data_Y != 'NONE')
 
-    metadata = np.array(data['metadata'])[mask]
-    data_Y = np.array(data['data_Y'])[mask]
+    metadata = np.array(data_w_metadata['metadata'])[mask]
+    data_Y = np.array(data_w_metadata['data_Y'])[mask]
 
     # Reshape to the dictionary: 
     # data_dict[txt] = [[T1,T2,'Synonym'],[T3,T4,'Hyponym']]
-    tmp = [(metadata[0][idx], [metadata[1][idx],metadata[2][idx],data_Y[idx]]) for idx in len(data_Y)]
+    tmp = [(metadata[idx][0], [metadata[idx][1],metadata[idx][2],data_Y[idx]]) for idx in range(len(data_Y))]
     data_dict = defaultdict(list)
     for k, v in tmp:
         data_dict[k].append(v)
@@ -188,8 +190,8 @@ def reformat_to_save(data_w_metadata):
         
         ####  Add the tags in fron (*,R1,R2 osv.)
         # Convert hyponym_reverted to hyponym
-        rel_hyponyms = [[x[0],x[1]] for x in relations if x[2] == 'Hyponym']
-        rel_hyponyms += [[x[1],x[0]] for x in relations if x[2] == 'Hyponym_reverted']
+        rel_hyponyms = [[x[0], x[1]] for x in relations if x[2] == 'Hyponym']
+        rel_hyponyms += [[x[1], x[0]] for x in relations if x[2] == 'Hyponym_reverted']
         # Add R1, R2 osv.
         rel_hyponyms = [('R' + str(idx), 'Hyponym', rel_hyponyms[idx][0], rel_hyponyms[idx][1]) for idx in range(len(rel_hyponyms))]
         # Add *
