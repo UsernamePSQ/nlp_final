@@ -33,7 +33,7 @@ def add_UMLS(data):
     return data
 
     
-
+### Bonus function for adding UMLS
 def _extract_entity_pairs(data_X):
     entity_pairs = []
     for data_point in data_X:

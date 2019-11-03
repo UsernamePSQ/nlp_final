@@ -36,6 +36,7 @@ def _sebastians_dummy_model(data_dict,data_raw):
             raise Exception("This should never happen, because the data-set \
                             is ordered, and we only let lists be hypernym of previous word")
             predictions.append("Hyponym")
+
         # Else none
         else:
             predictions.append("NONE")
