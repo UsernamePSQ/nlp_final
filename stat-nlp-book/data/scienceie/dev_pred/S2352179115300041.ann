@@ -32,6 +32,8 @@ T31	Material 1458 1474	carbon materials
 T32	Material 1539 1553	tungsten tiles
 T33	Material 595 606	ITER carbon
 T34	Material 1140 1146	carbon
-R1	Hyponym-of Arg1:T23 Arg2:T22	
-R2	Hyponym-of Arg1:T24 Arg2:T22	
-R3	Hyponym-of Arg1:T25 Arg2:T22	
+R1	Hyponym-of Arg1:T21 Arg2:T20	
+R2	Hyponym-of Arg1:T22 Arg2:T20	
+R3	Hyponym-of Arg1:T23 Arg2:T20	
+R4	Hyponym-of Arg1:T24 Arg2:T20	
+R5	Hyponym-of Arg1:T25 Arg2:T20	

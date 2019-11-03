@@ -1,6 +1,18 @@
 import numpy as np
 
-def concatenate_ie_eg(data):
+
+
+def down_scale(data)
+    '''
+    This can potentially take several downclae precedures and apply iteratively
+    '''
+
+    data = _concatenate_id_eg(data)
+
+    return data
+
+
+def _concatenate_ie_eg(data):
     '''
     This function makes 'i.e.' and 'e.g.' to a single word.
     '''

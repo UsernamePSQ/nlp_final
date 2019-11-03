@@ -20,9 +20,4 @@ T19	Material 734 763	blast-furnace slag “Calumite”
 T20	Material 849 857	Calumite
 T21	Material 863 880	powdered material
 T22	Material 897 905	particle
-R1	Hyponym-of Arg1:T8 Arg2:T7	
-R2	Hyponym-of Arg1:T9 Arg2:T7	
-R3	Hyponym-of Arg1:T10 Arg2:T7	
-R4	Hyponym-of Arg1:T14 Arg2:T13	
-R5	Hyponym-of Arg1:T15 Arg2:T13	
-R6	Hyponym-of Arg1:T16 Arg2:T13	
+R1	Hyponym-of Arg1:T20 Arg2:T21	

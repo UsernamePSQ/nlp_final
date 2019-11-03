@@ -27,6 +27,3 @@ T26	Process 1352 1363	irradiation
 T27	Material 1384 1389	oxide
 T28	Process 1485 1496	irradiation
 T29	Process 418 429	irradiation
-R1	Hyponym-of Arg1:T21 Arg2:T20	
-R2	Hyponym-of Arg1:T22 Arg2:T20	
-R3	Hyponym-of Arg1:T23 Arg2:T20	
