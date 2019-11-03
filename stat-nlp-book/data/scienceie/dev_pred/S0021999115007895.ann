@@ -20,3 +20,6 @@ T20	Process 892 911	Hamiltonian systems
 T19	Task 942 965	numerical approximation
 T21	Process 352 372	dynamics of a system
 T22	Task 336 372	express all the dynamics of a system
+R1	Hyponym-of Arg1:T7 Arg2:T5	
+R2	Hyponym-of Arg1:T6 Arg2:T7	
+R3	Hyponym-of Arg1:T9 Arg2:T8	

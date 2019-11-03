@@ -46,12 +46,6 @@ R5	Hyponym-of Arg1:T12 Arg2:T7
 R6	Hyponym-of Arg1:T13 Arg2:T7	
 R7	Hyponym-of Arg1:T14 Arg2:T7	
 R8	Hyponym-of Arg1:T15 Arg2:T7	
-R9	Hyponym-of Arg1:T24 Arg2:T23	
-R10	Hyponym-of Arg1:T25 Arg2:T23	
-R11	Hyponym-of Arg1:T26 Arg2:T23	
-R12	Hyponym-of Arg1:T27 Arg2:T26	
-R13	Hyponym-of Arg1:T28 Arg2:T26	
-R14	Hyponym-of Arg1:T29 Arg2:T26	
-R15	Hyponym-of Arg1:T32 Arg2:T31	
-R16	Hyponym-of Arg1:T33 Arg2:T31	
-R17	Hyponym-of Arg1:T34 Arg2:T31	
+R9	Hyponym-of Arg1:T32 Arg2:T31	
+R10	Hyponym-of Arg1:T33 Arg2:T31	
+R11	Hyponym-of Arg1:T34 Arg2:T31	

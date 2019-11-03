@@ -24,6 +24,6 @@ T23	Material 977 986	particles
 T24	Process 1006 1028	gas–solid channel flow
 T25	Material 1006 1009	gas
 T26	Material 91 100	particles
-*	Synonym-of T2 T3
+R1	Hyponym-of Arg1:T2 Arg2:T3	
 *	Synonym-of T9 T10
 *	Synonym-of T15 T16

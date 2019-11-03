@@ -17,3 +17,6 @@ T16	Material 1188 1194	cation
 T17	Process 1315 1327	grain growth
 T18	Process 972 986	migration path
 T19	Process 1029 1048	diffusion mechanism
+R1	Hyponym-of Arg1:T6 Arg2:T7	
+R2	Hyponym-of Arg1:T18 Arg2:T19	
+R3	Hyponym-of Arg1:T9 Arg2:T8	
