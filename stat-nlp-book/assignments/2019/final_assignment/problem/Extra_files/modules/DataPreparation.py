@@ -143,40 +143,12 @@ class WordEmbedder:
             return np.zeros(self.length)
 #end-class
 
-def GenerateVocabs(fulldata, maxdistance, maxsize, nlp):
-    maxlen = maxdistance
-
-    fulldata = copy.deepcopy(fulldata)
-    # Create POS for all before we create vocab
-    for entry in list(fulldata.values()):
-        addPOStoDic(entry, nlp)
-        addLemmatoDic(entry, nlp)
-    # we introduce four vocabs: word, dist, entity, pos
-    vocab_w = Vocab.from_iterable([fulldata[i]['tokens'] for i in fulldata], max_size = maxsize)
-    vocab_dist = Vocab.from_iterable(range(-maxlen, maxlen))
-    vocab_ent = Vocab.from_iterable([fulldata[i]['IOBtags'] for i in fulldata]) # these should have all
-    vocab_pos = Vocab.from_iterable([fulldata[i]['POS'] for i in fulldata]) # and so should these!
-    vocab_lemma = Vocab.from_iterable([fulldata[i]['Lemma'] for i in fulldata]) # and so should these!
-    return vocab_w, vocab_dist, vocab_ent, vocab_pos, vocab_lemma
-#end-def
-
-# Convert input from strings to ints for embedding layer (or use pre-trained embeddings):
-def createX(xdata, vocab_words, vocab_distances, vocab_entities, vocab_pos, vocab_lemma):
-    out = [[vocab_words.map_to_index([w[0]])[0],                # token
-            vocab_distances.map_to_index([w[1]])[0],            # dist 1
-            vocab_distances.map_to_index([w[2]])[0],            # dist 2
-             vocab_entities.map_to_index([w[3]])[0],            # entities
-             vocab_pos.map_to_index([w[4]])[0],                 # pos
-             vocab_lemma.map_to_index([w[5]])[0]] for w in xdata] #lemma
-    return out
-#end-def
-
 def createXEmbeddings(xdata, embedder, vocab_distances, vocab_entities, vocab_pos):
-    out = [[embedder.getEmbedding(w[0]),
-            vocab_distances.map_to_index([w[1]])[0],
-            vocab_distances.map_to_index([w[2]])[0],
-             vocab_entities.map_to_index([w[3]])[0],
-             vocab_pos.map_to_index([w[4]])[0],
-             embedder.getEmbedding(w[5])] for w in xdata]
+    out = [[embedder.getEmbedding(w[0]), # w token
+            w[1], # dist 1
+            w[2], # dist 2
+            vocab_entities.map_to_index([w[3]])[0], #ent
+            vocab_pos.map_to_index([w[4]])[0], #pos
+            embedder.getEmbedding(w[5])] for w in xdata] # lemma
     return out
 #end-def
