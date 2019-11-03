@@ -18,6 +18,7 @@ def f1_score_ala_calc_measures(y_true, y_pred):
 
     prec, recall, f1, s = precision_recall_fscore_support(
         y_true, y_pred, labels=targets, average='micro')
+        
     metrics['overall'] = {
         'precision': prec,
         'recall': recall,

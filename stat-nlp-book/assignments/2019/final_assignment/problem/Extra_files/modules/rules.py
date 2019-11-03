@@ -60,9 +60,13 @@ def _add_weak_list_rules(data_m_XY, data_raw):
     txt_indices = [np.where(txt_files == file) for file in all_txt_files]
 
     for txt in txt_files:
+        
+        txt_X = [data_m_XY['data_X'][idx] for idx in txt_indices]
+        links = 
         # for links in link
         # Extract the indices.. again
             # the function (on the correct indices)
+
 
     for idx in range(len(data_dict['data_X'])):
 
