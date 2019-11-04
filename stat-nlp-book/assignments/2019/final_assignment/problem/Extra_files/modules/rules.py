@@ -28,7 +28,7 @@ def _add_strong_abr_rules(data_m_XY, data_raw):
     for idx in range(len(predictions)):
 
         # Extract relevant data from data_point
-        txt, entity_1, entity_2 = data_data_m_XYdict['metadata'][idx]
+        txt, entity_1, entity_2 = data_m_XY['metadata'][idx]
         abrs = all_abrs[txt]
 
         # Check if the entities are in abbreviations
@@ -57,84 +57,78 @@ def _add_weak_list_rules(data_m_XY, data_raw):
     all_txt_files = np.array(list(all_linked_lists.keys()))
     txt_files = [meta[0] for meta in data_m_XY['metadata']]
 
-    txt_indices = [np.where(txt_files == file) for file in all_txt_files]
+    txt_indices = {file: np.argwhere(np.array(txt_files) == file).reshape(-1) for file in all_txt_files}
+    Falsely_removed_synonyms = 0
+    Falsely_removed_rels = 0
+    counter_not_altered = 0
+    counter_altered = 0
+    #Only loop over txt_files with links
+    for txt in all_txt_files:
 
-    for txt in txt_files:
+        #Extract the X's and Y's with the file as metadata
+        txt_X = [data_m_XY['data_X'][idx] for idx in txt_indices[txt]]
+        txt_Y = [data_m_XY['data_Y'][idx] for idx in txt_indices[txt]]
+        entities = [tuple(data_m_XY['metadata'][idx][1:]) for idx in txt_indices[txt]]
         
-        txt_X = [data_m_XY['data_X'][idx] for idx in txt_indices]
-        links = 
-        # for links in link
-        # Extract the indices.. again
-            # the function (on the correct indices)
+        #Extract links from that txt
+        linked_lists = all_linked_lists[txt]
+
+        for links in linked_lists:
+
+            ## Find the data with entities from the list
+            idxs_w_entities = [idx for idx in range(len(entities)) if \
+                               len(np.intersect1d(np.array(links), np.array(entities[idx]))) >= 1]
+
+            ## No synonyms with an entity from a list
+            for idx in idxs_w_entities:
+                if txt_Y[idx] == 'Synonym':
+                    Falsely_removed_synonyms += 1
+                    txt_Y[idx] = 'NONE'
+                    data_m_XY['data_Y'][txt_indices[txt][idx]] = 'NONE'
+            
+            ## No relations between them
+            for idx in idxs_w_entities:
+                if entities[idx][0] in links and entities[idx][1] in links:
+                    if txt_Y[idx] != 'NONE':
+                        Falsely_removed_rels += 1
+                    txt_Y[idx] = 'NONE'
+                    data_m_XY['data_Y'][txt_indices[txt][idx]] = 'NONE'
+            
+            ## If one is Hyponym or Hyponym_reverted, let them all damn be.
+            for idx in idxs_w_entities:
+                
+                if txt_Y[idx] == 'NONE':
+                    continue
+                elif txt_Y[idx] == 'Hyponym':
+                    relation = 'Hyponym'
+                else:
+                    relation = 'Hyponym_reverted'
+
+                if entities[idx][0] in links:
+                    other_idxs = [entities.index((ent,entities[idx][1])) for ent in links]
+                    for id in other_idxs:
+
+                        if data_m_XY['data_Y'][txt_indices[txt][id]] == relation:
+                            counter_not_altered += 1 * (id != idx)
+                        else:
+                            data_m_XY['data_Y'][txt_indices[txt][id]] = relation
+                            counter_altered += 1
+                            
+                elif entities[idx][1] in links:
+                    other_idxs = [entities.index((entities[idx][0], ent)) for ent in links]
+                    for id in other_idxs:
+                        if data_m_XY['data_Y'][txt_indices[txt][id]] == relation:
+                            counter_not_altered += 1 * (id != idx)
+                        else:
+                            data_m_XY['data_Y'][txt_indices[txt][id]] = relation
+                            counter_altered += 1
+                else:
+                    raise Exception("This should not happen!")
+    print("Number of removed synonyms: {}".format(Falsely_removed_synonyms))
+    print("Number of removed hyponym-relations within list: {}".format(Falsely_removed_rels))
+    print("Number of labels changed to hyponyms: {}".format(counter_altered))
+    print("Number of labels that would be changed but already in list of hyponyms: {}".format(counter_not_altered))
+    return data_m_XY
 
 
-    for idx in range(len(data_dict['data_X'])):
 
-        # Extract relevant data from data_point
-        txt, entity_1, entity_2 = data_dict['metadata'][idx]
-        links = all_linked_lists[txt]
-        abrs = all_abrs[txt]
-
-        # Link the lists to the entity right before
-        rb = [data_raw[txt]['annotation_names'][data_raw[txt]['annotation_names'].index(link[0])-1] for link in links]
-
-        # Check if the entities are in abreviations
-        if any([(entity_1, entity_2) == syn for syn in abrs]) or any([(entity_2, entity_1) == syn for syn in abrs]):
-            predictions.append("Synonym")
-        # Check if entities are in hyponyms
-        elif any([((entity_1 == rb[idx]) and (entity_2 in links[idx])) for idx in range(len(links))]):
-            predictions.append("Hyponym_reverted")
-        # Dette burde aldrig ske:
-        elif any([((entity_2 == rb[idx]) and (entity_1 in links[idx])) for idx in range(len(links))]):
-            raise Exception("This should never happen, because the data-set \
-                            is ordered, and we only let lists be hypernym of previous word")
-            predictions.append("Hyponym")
-
-        # Else none
-        else:
-            predictions.append("NONE")
-
-
-def _sebastians_dummy_model(data_m_XY,data_raw):
-    """
-    This creates two types of labels:
-
-    1) Abbreviations are labeled as synonyms.
-    2) Lists are all labeled as Hyponym of the entity right in front of the list.
-    """
-
-    ## Get lists and abbreviations
-    all_linked_lists = List_identifyer().find_lists(data_raw)
-    all_abrs = Abr_identifyer().find_abbrevations(data_raw)
-
-    # Create hash tables for faster lookup in looping:
-
-
-    ## Create the predictions
-    for idx in range(len(data_dict['data_X'])):
-
-        # Extract relevant data from data_point
-        txt, entity_1, entity_2 = data_dict['metadata'][idx]
-        links = all_linked_lists[txt]
-        abrs = all_abrs[txt]
-
-        # Link the lists to the entity right before
-        rb = [data_raw[txt]['annotation_names'][data_raw[txt]['annotation_names'].index(link[0])-1] for link in links]
-
-        # Check if the entities are in abreviations
-        if any([(entity_1, entity_2) == syn for syn in abrs]) or any([(entity_2, entity_1) == syn for syn in abrs]):
-            predictions.append("Synonym")
-        # Check if entities are in hyponyms
-        elif any([((entity_1 == rb[idx]) and (entity_2 in links[idx])) for idx in range(len(links))]):
-            predictions.append("Hyponym_reverted")
-        # Dette burde aldrig ske:
-        elif any([((entity_2 == rb[idx]) and (entity_1 in links[idx])) for idx in range(len(links))]):
-            raise Exception("This should never happen, because the data-set \
-                            is ordered, and we only let lists be hypernym of previous word")
-            predictions.append("Hyponym")
-
-        # Else none
-        else:
-            predictions.append("NONE")
-
-    return np.array(predictions)
