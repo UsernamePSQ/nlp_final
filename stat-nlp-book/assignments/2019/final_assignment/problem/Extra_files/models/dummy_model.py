@@ -1,7 +1,7 @@
 from Extra_files.modules.Entity_list_identifyer import List_identifyer, Abr_identifyer
 import numpy as np
 
-def _sebastians_dummy_model(data_dict,data_raw):
+def _sebastians_dummy_model(data_m_XY,data_raw):
     """
     This creates two types of labels:
 
@@ -15,10 +15,10 @@ def _sebastians_dummy_model(data_dict,data_raw):
 
     predictions = []
     ## Create the predictions
-    for idx in range(len(data_dict['data_X'])):
+    for idx in range(len(data_m_XY['data_X'])):
 
         # Extract relevant data from data_point
-        txt, entity_1, entity_2 = data_dict['metadata'][idx]
+        txt, entity_1, entity_2 = data_m_XY['metadata'][idx]
         links = all_linked_lists[txt]
         abrs = all_abrs[txt]
 

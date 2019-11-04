@@ -9,15 +9,17 @@ import numpy as np
 import pandas as pd
 import warnings
 import seaborn as sns
-
+import matplotlib as mpl
+import importlib
 
 
 def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
     '''
     This functions creates a dataframe for later analysis
     '''
-    # Mask only where they are not all NONE
 
+    '''
+    # Mask only where they are not all NONE
     mask = (y_base != 'NONE') | (y_weak != 'NONE') | (y_true != 'NONE')
     indices = np.arange(len(data_m_XY['data_Y']))[mask]
 
@@ -26,6 +28,10 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
     y_weak = y_weak[mask]
     y_true = y_true[mask]
     metadata = np.array(data_m_XY['metadata'])[mask]
+    '''
+    metadata = np.array(data_m_XY['metadata'])
+
+    
 
     #Create df
     df_err_an = pd.DataFrame({'file' : [],
@@ -49,7 +55,7 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
         
         ## Find second entity
         index_ent2_begin = B_indices[data[txt]['annotation_names'].index(T2)]
-        if index_ent2_begin == len(data[txt]['annotation_names']) -1:
+        if index_ent2_begin == len(data[txt]['tokens']) - 1:
             index_end = index_ent2_begin
         else:
             rest_iob_tags = np.array(data[txt]['IOBtags'])[(index_ent2_begin+1):]
@@ -57,8 +63,8 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
             index_for_next = np.arange(len(rest_iob_tags))[mask][0]
             index_end = index_ent2_begin + index_for_next
             
-        assert index_end == index_start + len(data_m_XY['data_X'][indices[idx]])-1 #Check i get same index_end as Skjøtt
-        
+        assert index_end == index_start + len(data_m_XY['data_X'][idx])-1 #Check i get same index_end as Skjøtt
+
         #Create entity_1
         entity_1 = data[txt]['tokens'][index_start]
         for i in range(index_start+1,entity_1_end+1):
@@ -95,40 +101,67 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
     return df_err_an
 
 
-def plot_wrong_labels(df_err_an):
-
+def plot_correct_labels(df_err_an):
+    importlib.reload(sns)
     pd.options.mode.chained_assignment = None  # Remove .loc-warnings from pandas
-    
-    # Create column indicating the wrong model
-    df_wrong_labels = df_err_an[(df_err_an['True label'] != df_err_an['Base label']) | \
-                        (df_err_an['True label'] != df_err_an['Weak learning label'])]
-    df_wrong_labels['Model'] = 'Both'
-    df_wrong_labels.loc[df_wrong_labels['True label'] == df_wrong_labels['Base label'],'Model'] = 'Weak model'#*sum(df_err_an['True label'] == df_err_an['Base label'])
-    df_wrong_labels.loc[df_wrong_labels['True label'] == df_wrong_labels['Weak learning label'],'Model'] = 'Base model'#*sum(df_err_an['True label'] == df_err_an['Weak learning label'])
 
+    # Create column indicating the wrong model
+    df_correct_labels = df_err_an
+
+    df_correct_labels['Model'] = 'Both'
+    df_correct_labels.loc[(df_correct_labels['True label'] == df_correct_labels['Base label']) & \
+                        (df_correct_labels['True label'] != df_correct_labels['Weak learning label']) ,'Model'] = 'Base model'
+    df_correct_labels.loc[(df_correct_labels['True label'] == df_correct_labels['Weak learning label']) & \
+                        (df_correct_labels['True label'] != df_correct_labels['Base label']) ,'Model'] = 'Weak model'
+    df_correct_labels.loc[(df_correct_labels['True label'] != df_correct_labels['Weak learning label']) & \
+                        (df_correct_labels['True label'] != df_correct_labels['Base label']) ,'Model'] = 'None'
 
     warnings.filterwarnings('ignore') #Seaborn gets warning, but not a problem
 
+    df = df_correct_labels
+    tmp = df["True label"].groupby(df["Model"]).value_counts(normalize=False).rename("Number of correct labels").reset_index()
 
-    df = df_wrong_labels
-    tmp = df["True label"].groupby(df["Model"]).value_counts(normalize=False).rename("Number of wrong labels").reset_index()
+    ## Add empty row if doesn't exist
+    labels = ['NONE','Synonym', 'Hyponym', 'Hyponym_reverted']
+    models = ['None', 'Both', 'Base model', 'Weak model']
 
-    ax = sns.barplot(x="True label", y="Number of wrong labels", hue="Model", data=tmp)
-    ax.set_ylabel('Number of wrong labels')
-    ax.set_title('Number of wrong labels models divided into true labels',fontdict = {'fontsize':  15})
+    for label in labels:
+        for model in models:
+            if sum((tmp['True label'] == label) & (tmp['Model'] == model)) == 0:
+                tmp = tmp.append({'True label': label,
+                                 'Model': model,
+                                 'Number of correct labels': 0},
+                                 ignore_index = True)
+
+    #Add 'both' to the individual
+    for label in labels:
+        for model in ['Base model', 'Weak model']:
+            tmp.loc[(tmp['True label'] == label) & (tmp['Model'] == model),'Number of correct labels'] += \
+                np.array(tmp.loc[(tmp['True label'] == label) & (tmp['Model'] == 'Both'),'Number of correct labels'])
+
+    # Make into percentage
+    for label in labels:
+        tmp.loc[tmp['True label'] == label,'Number of correct labels'] /= sum(df_correct_labels['True label'] == label)
+
+    ax = sns.barplot(x="True label", y="Number of correct labels", hue="Model", data=tmp)
+    ax.set_ylabel('Percentage correct labels')
+    ax.set_title('Percentage of correct labels within each category',fontdict = {'fontsize':  15})
+    vals = ax.get_yticks()
+    ax.set_yticklabels(['{:,.0%}'.format(x) for x in vals])
+
+    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
     warnings.filterwarnings('once') #Turn warning on again
 
     return ax
 
-def plot_confusion_matrix(y_pred, y_true, n_labels=None,
-                          normalize=False):
+def plot_confusion_matrix(y_true, y_pred, n_labels = None,
+                          normalize=False,ax = None):
     """
     This function prints and plots the confusion matrix.
-    If n_labels is specified, it only shows the most 'n_labels' most common labels (in y_true)
     Normalization can be applied by setting `normalize=True`.
     """
-    
+    sns.reset_orig()
     if normalize:
         title = 'Normalized confusion matrix'
     else:
@@ -140,12 +173,12 @@ def plot_confusion_matrix(y_pred, y_true, n_labels=None,
     if normalize:
         cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
     
-    # Find the most_common
+    #Find the most_common
     if n_labels is None:
         x_tick_size = cm.shape[1]
         y_tick_size = cm.shape[0]
         classes = unique_labels(y_true, y_pred)
-        label_to_idx = {classes[i]: i for i in range(len(classes))}  # The simple label_to_idx
+        label_to_idx = {classes[i]: i for i in range(len(classes))} #The simple label_to_idx
     else:
         x_tick_size = n_labels
         y_tick_size = n_labels
@@ -153,12 +186,13 @@ def plot_confusion_matrix(y_pred, y_true, n_labels=None,
         classes = np.array([tup[0] for tup in most_common])
         
         all_labels = unique_labels(y_true, y_pred)
-        label_to_idx = {label: list(all_labels).index(label) for label in classes}
+        label_to_idx = {label:list(all_labels).index(label) for label in classes}
     
     sub_cm = cm[np.array([label_to_idx[label] for label in classes])]
-    sub_cm = sub_cm[:, np.array([label_to_idx[label] for label in classes])]
-    
-    fig, ax = plt.subplots()
+    sub_cm = sub_cm[:,np.array([label_to_idx[label] for label in classes])]
+
+    if ax is None:
+        ax = plt.gca()
     im = ax.imshow(sub_cm, interpolation='nearest', cmap=plt.cm.Blues)
     ax.figure.colorbar(im, ax=ax)
     # We want to show all ticks...
@@ -170,6 +204,7 @@ def plot_confusion_matrix(y_pred, y_true, n_labels=None,
            ylabel='True label',
            xlabel='Predicted label')
         
+    
     # Rotate the tick labels and set their alignment.
     plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
              rotation_mode="anchor")
@@ -179,10 +214,9 @@ def plot_confusion_matrix(y_pred, y_true, n_labels=None,
     thresh = sub_cm.max() / 2.
     
     for i in range(x_tick_size):
-        for j in range(y_tick_size):
+        for j in range(y_tick_size):               
             ax.text(j, i, format(sub_cm[i, j], fmt),
                     ha="center", va="center",
                     color="white" if sub_cm[i, j] > thresh else "black")
 
-    fig.tight_layout()
     return ax
