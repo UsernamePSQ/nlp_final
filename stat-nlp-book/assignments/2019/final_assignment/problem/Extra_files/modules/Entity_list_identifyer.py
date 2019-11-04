@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+from copy import deepcopy
 
 class Abr_identifyer():
     '''
@@ -93,14 +93,14 @@ class List_identifyer():
     
     def __init__(self):
         self.entity_lists = defaultdict(list)
-        self.tmp = []  # Used in 'find_lists
+        self.tmp = []  # Used in 'find_lists'
         self.min_list_size = 3
 
     def find_lists(self, data, min_list_size=3):
         self.min_list_size = min_list_size
 
         for txt, data_point in data.items():
-            self.txt = txt
+            self.tmp = []
             tokens = data_point['tokens']
             IOBtags = data_point['IOBtags']
             ann_names = data_point['annotation_names']
@@ -117,7 +117,7 @@ class List_identifyer():
 
                 #If the current is 'B', add to tmp
                 if IOBtags[token_idx][0] == 'B':
-                    self._add_list_and_reset()  # Add tmp and reset
+                    self._add_list_and_reset(txt)  # Add tmp and reset
                     self.tmp = [ann_names[entity_number]]
                     entity_number += 1
                     token_idx += 1
@@ -153,16 +153,16 @@ class List_identifyer():
                     self.tmp.append(ann_names[entity_number])
                     entity_number += 1
                     token_idx += 2  #Jump to right after B.
-                    self._add_list_and_reset()  # Add tmp and reset
+                    self._add_list_and_reset(txt)  # Add tmp and reset
                 elif option_4 or option_5:
                     self.tmp.append(ann_names[entity_number])
                     entity_number += 1
                     token_idx += 3  # Jump to right after B.       
                     # Add tmp and reset
-                    self._add_list_and_reset()    
+                    self._add_list_and_reset(txt)    
                 else:
                     token_idx += 1
-                    self._add_list_and_reset()
+                    self._add_list_and_reset(txt)
 
                 # End if
             # End while loop
@@ -170,11 +170,11 @@ class List_identifyer():
 
         return self.entity_lists
 
-    def _add_list_and_reset(self):
+    def _add_list_and_reset(self,txt):
         
         #If length is minimum 'min_list_size', add it
         if len(self.tmp) >= self.min_list_size:
-            self.entity_lists[self.txt].append(self.tmp)
+            self.entity_lists[txt].append(deepcopy(self.tmp))
         
         #Reset tmp
         self.tmp = []
