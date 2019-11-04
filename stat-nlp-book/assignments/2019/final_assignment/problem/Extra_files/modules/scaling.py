@@ -67,7 +67,7 @@ def _remove_dot_in_sentence(data_m_XY, *vocab_w):
         #Append if not 'continue'
         new_metadata.append(metadata[idx])
         new_data_Y.append(data_Y[idx])
-        new_data_X.append(data_X[idx])
+        new_data_X.append(data_m_XY['data_X'][idx])
 
     ## Replace back
     data_m_XY['metadata'] = new_metadata
