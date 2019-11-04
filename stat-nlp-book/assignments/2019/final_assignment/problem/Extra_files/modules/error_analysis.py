@@ -7,14 +7,18 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import numpy as np
 import pandas as pd
+import warnings
+import seaborn as sns
+
+
 
 def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
     '''
     This functions creates a dataframe for later analysis
     '''
+    # Mask only where they are not all NONE
 
-    #Mask only where they are not all NONE
-    mask = (y_base != 'NONE') & (y_weak != 'NONE') & (y_true != 'NONE')
+    mask = (y_base != 'NONE') | (y_weak != 'NONE') | (y_true != 'NONE')
     indices = np.arange(len(data_m_XY['data_Y']))[mask]
 
     #Subset
@@ -73,13 +77,11 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
             
         #Create sentence
         sentence = data[txt]['tokens'][index_start]
-        for i in range(index_start+1,index_end+1):
+        for i in range(index_start+1, index_end+1):
             if data[txt]['locations'][i-1][1] == data[txt]['locations'][i][0]:
                 sentence += data[txt]['tokens'][i]
-            elif data[txt]['locations'][i-1][1] == data[txt]['locations'][i][0] - 1:
-                sentence += " " + data[txt]['tokens'][i]
             else:
-                raise Exception("Burde ikke kunne ske")
+                sentence += " " + data[txt]['tokens'][i]
         
         df_err_an = df_err_an.append({'file':txt,
                                     'Sentence between entities':sentence,
@@ -87,11 +89,37 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
                                     'Entity 2':entity_2},ignore_index=True)
     #Append the y's
     df_err_an['True label'] = y_true
-    df_err_an['Base label'] = y_weak
-    df_err_an['Weak learning label'] = y_base
+    df_err_an['Base label'] = y_base
+    df_err_an['Weak learning label'] = y_weak
 
     return df_err_an
 
+
+def plot_wrong_labels(df_err_an):
+
+    pd.options.mode.chained_assignment = None  # Remove .loc-warnings from pandas
+    
+    # Create column indicating the wrong model
+    df_wrong_labels = df_err_an[(df_err_an['True label'] != df_err_an['Base label']) | \
+                        (df_err_an['True label'] != df_err_an['Weak learning label'])]
+    df_wrong_labels['Model'] = 'Both'
+    df_wrong_labels.loc[df_wrong_labels['True label'] == df_wrong_labels['Base label'],'Model'] = 'Weak model'#*sum(df_err_an['True label'] == df_err_an['Base label'])
+    df_wrong_labels.loc[df_wrong_labels['True label'] == df_wrong_labels['Weak learning label'],'Model'] = 'Base model'#*sum(df_err_an['True label'] == df_err_an['Weak learning label'])
+
+
+    warnings.filterwarnings('ignore') #Seaborn gets warning, but not a problem
+
+
+    df = df_wrong_labels
+    tmp = df["True label"].groupby(df["Model"]).value_counts(normalize=False).rename("Number of wrong labels").reset_index()
+
+    ax = sns.barplot(x="True label", y="Number of wrong labels", hue="Model", data=tmp)
+    ax.set_ylabel('Number of wrong labels')
+    ax.set_title('Number of wrong labels models divided into true labels',fontdict = {'fontsize':  15})
+
+    warnings.filterwarnings('once') #Turn warning on again
+
+    return ax
 
 def plot_confusion_matrix(y_pred, y_true, n_labels=None,
                           normalize=False):

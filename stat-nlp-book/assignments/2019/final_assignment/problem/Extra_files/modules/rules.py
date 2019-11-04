@@ -25,6 +25,7 @@ def _add_strong_abr_rules(data_m_XY, data_raw):
     predictions = data_m_XY['data_Y']
 
     ## Change the predictions
+    counter = 0
     for idx in range(len(predictions)):
 
         # Extract relevant data from data_point
@@ -33,10 +34,13 @@ def _add_strong_abr_rules(data_m_XY, data_raw):
 
         # Check if the entities are in abbreviations
         if any([(entity_1, entity_2) == syn for syn in abrs]) or any([(entity_2, entity_1) == syn for syn in abrs]):
+            if predictions[idx] != "Synonym":
+                counter += 1
             predictions[idx] = "Synonym"
         
     data_m_XY['data_Y'] = predictions
 
+    print("Number of forced synonyms: {}".format(counter))
     return data_m_XY
 
 
@@ -124,6 +128,7 @@ def _add_weak_list_rules(data_m_XY, data_raw):
                             counter_altered += 1
                 else:
                     raise Exception("This should not happen!")
+            
     print("Number of removed synonyms: {}".format(Falsely_removed_synonyms))
     print("Number of removed hyponym-relations within list: {}".format(Falsely_removed_rels))
     print("Number of labels changed to hyponyms: {}".format(counter_altered))

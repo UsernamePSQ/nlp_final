@@ -392,7 +392,6 @@ def _concatenate_ie_eg(data):
 
         while token_idx <= len(tokens)-4:
             new_IOBtags.append(IOBtags[token_idx])
-            new_locations.append(locations[token_idx])
 
             # Don't do anything if it is part of a tag
             IOBtag_valid = True
@@ -412,9 +411,11 @@ def _concatenate_ie_eg(data):
             if IOBtag_valid and (eg or ie):
                 conc_abr = ''.join(tokens[token_idx:(token_idx+4)])
                 new_tokens.append(conc_abr)
+                new_locations.append((locations[token_idx][0],locations[token_idx+3][1]))
                 token_idx += 4
             else:
                 new_tokens.append(tokens[token_idx])
+                new_locations.append(locations[token_idx])
                 token_idx += 1
                 
             # End if
