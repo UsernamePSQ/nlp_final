@@ -1,17 +1,53 @@
 import numpy as np
 from copy import deepcopy
+from collections import Counter
+
+def upscale(data_m_XY, scale_factor = 5):
+    '''
+    This function upscales synonym, hyponym and hyponym_reverted with scale_factor
+    '''
+    data_m_XY = deepcopy(data_m_XY)
+
+    print("Upscaling relations with factor {}".format(scale_factor))
+
+    labels_before_scale = Counter(data_m_XY['data_Y']).most_common()
+
+    # Get locations with not NONE data
+    mask = (np.array(data_m_XY['data_Y']) != 'NONE')
+    indices = [idx for idx in range(len(data_m_XY['data_Y'])) if mask[idx]]
+
+    # Extract
+    meta_not_none = np.array(data_m_XY['metadata'])[mask]
+    data_X_not_none = [data_m_XY['data_X'][idx] for idx in indices]
+    data_Y_not_none = np.array(data_m_XY['data_Y'])[mask]
+
+    # Repeat and append
+    data_m_XY['metadata'] += list(meta_not_none) * (scale_factor - 1)
+    data_m_XY['data_X'] += data_X_not_none * (scale_factor - 1)
+    data_m_XY['data_Y'] += list(data_Y_not_none) * (scale_factor - 1)
+
+    # Shuffle
+    indices = np.arange(len(data_m_XY['data_Y']))
+    np.random.shuffle(indices)
+    data_m_XY['metadata'] = [data_m_XY['metadata'][idx] for idx in indices]
+    data_m_XY['data_Y'] = [data_m_XY['data_Y'][idx] for idx in indices]
+    data_m_XY['data_X'] = [data_m_XY['data_X'][idx] for idx in indices]
+
+    # Print
+    labels_after_scale = Counter(data_m_XY['data_Y']).most_common()
+    print("Labels before scale:", labels_before_scale)
+    print("Labels after scale:", labels_after_scale)
+
+    return data_m_XY
 
 
-def upscale(data):
-    pass
-
-def downscale(data, *vocab_w):
+def downscale(data_m_XY, *vocab_w):
     '''
     This can potentially take several downclae precedures and apply iteratively
     '''
 
     # Remove dots (inplace removal)
-    data = _remove_dot_in_sentence(data, vocab_w)
+    data = _remove_dot_in_sentence(data_m_XY, vocab_w)
 
     return data
 
