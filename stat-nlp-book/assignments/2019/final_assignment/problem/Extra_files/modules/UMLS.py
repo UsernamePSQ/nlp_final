@@ -27,7 +27,7 @@ def add_UMLS(data):
         if any([((hyp[0] in ent_pair[0]) and (hyp[1] in ent_pair[1])) for hyp in hyponyms]):
             data['UMLS'].append('Hyponym')
         elif any([((hyp[1] in ent_pair[0]) and (hyp[0] in ent_pair[1])) for hyp in hyponyms]):
-            data['UMLS'].append('Hyponym_reverted')
+            data['UMLS'].append('Hypernym')
         else:
             data['UMLS'].append('NONE')
     return data
