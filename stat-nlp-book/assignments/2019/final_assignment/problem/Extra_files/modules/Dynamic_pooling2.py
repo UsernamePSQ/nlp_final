@@ -2,20 +2,33 @@ import tensorflow as tf
 from tensorflow.math import mod, floordiv, greater, logical_and, equal, greater_equal, segment_max
 from tensorflow.keras.layers import Lambda
 
-def Dynamic_max_pooling(features, out_len=3):
 
-    def too_short(x: tf.Tensor):
+class Dynamic_max_pooling(tf.keras.layers.Layer):  # not any better
+    def __init__(self, features, out_len):
+        super(Dynamic_max_pooling, self).__init__()
+        self.features = features
+        self.out_len = out_len
+
+    # def build(self, input_shape):
+    #     self.kernel = self.add_variable("kernel",
+    #                                     shape=[int(input_shape[-1]),
+    #                                            self.num_outputs])
+
+    def call(self, x, **kwargs):
+        return self.f(x)
+
+    def too_short(self, x: tf.Tensor):
         dyn_shape = tf.shape(x)
-        tmp = tf.fill((dyn_shape[0], out_len - dyn_shape[1], dyn_shape[2]), 0.0)
+        tmp = tf.fill((dyn_shape[0], self.out_len - dyn_shape[1], dyn_shape[2]), 0.0)
         tmp2 = tf.concat([x, tmp], axis=1)
         return tmp2
 
-    def long_enough(x: tf.Tensor):
+    def long_enough(self, x: tf.Tensor):
         dyn_shape = tf.shape(x)
 
         n = dyn_shape[1]
-        y = floordiv(n, out_len)
-        extras = mod(n, out_len)
+        y = floordiv(n, self.out_len)
+        extras = mod(n, self.out_len)
 
         current_val = tf.constant(0)
         n_set = tf.constant(0)
@@ -60,25 +73,14 @@ def Dynamic_max_pooling(features, out_len=3):
 
         return tf.expand_dims(
             tf.transpose(tf.map_fn(lambda a: segment_max(a, seg), tf.transpose(tf.squeeze(x, [0]), [1, 0])), [1, 0]), 0)
-        # return tf.transpose(tf.squeeze(x), [1, 0])
-        # return tf.shape(tf.squeeze(x))
-        # return tf.expand_dims(tf.map_fn(lambda a: tf.shape(tf.squeeze(a)), tf.transpose(tf.squeeze(x), [1, 0])),0)
-        # return tf.expand_dims(tf.transpose(tf.squeeze(x), [1, 0]),0)
 
-    def f(x: tf.Tensor):
-        br = tf.constant(out_len)
-        # print(br.shape)
-        # tmp = tf.shape(x)
-        # low = tf.constant([[0.0, 2]])
-        # high = tf.constant([2.0])
+    def f(self, x: tf.Tensor):
+        br = tf.constant(self.out_len)
 
-        ret = tf.cond(tf.less(tf.shape(x)[1], br), lambda: too_short(x), lambda: long_enough(x))
+        ret = tf.cond(tf.less(tf.shape(x)[1], br), lambda: self.too_short(x), lambda: self.long_enough(x))
 
-        return tf.reshape(ret, [1, out_len, features])
+        return tf.reshape(ret, [1, self.out_len, self.features])
         # return ret
-        # return long_enough(x)
-
-    return Lambda(f)
 
 
 if __name__ == '__main__':
@@ -95,8 +97,8 @@ if __name__ == '__main__':
 
     def gen():
         while True:
-            for x,y  in zip(train_x2, train_y):
-                yield [x,x], y
+            for x, y in zip(train_x2, train_y):
+                yield [x, x], y
 
 
     xin = Input(batch_shape=(1, None, 2))
@@ -111,6 +113,7 @@ if __name__ == '__main__':
     # tmp = model.predict(np.expand_dims(train_x2[-1], axis=0))
     tmp = model.predict([train_x2[0], train_x2[0]])
     print(tmp)
+    model.save('tmp.h5')
     a = np.reshape(range(2 * 3), (1, 3, 2))
     # a = np.reshape(range(2 * 2), (1, 2, 2))
     tmp = model.predict(a)
