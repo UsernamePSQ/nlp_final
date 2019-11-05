@@ -33,6 +33,21 @@ class MasterVocab:
             warnings.warn("WARNING: MasterVocab does not have a generated vocab! Returning original input...")
             out = Xdata
         return out
+
+    def transformX_toEmbeddings(self, Xdata, embedder):
+        if not self.word_vocab is None:
+            out = [[embedder.getEmbedding(w[0]), # w token
+                    w[1], # dist 1
+                    w[2], # dist 2
+                    self.entities_vocab.map_to_index([w[3]])[0], #ent
+                    self.pos_vocab.map_to_index([w[4]])[0], #pos
+                    embedder.getEmbedding(w[5])] for w in Xdata] # lemma
+        else:
+            warnings.warn("WARNING: MasterVocab does not have a generated vocab! Returning original input...")
+            out = Xdata
+        return out
+    #end-def
+
     def transformX_toLabel(self, Xdata):
         if not self.word_vocab is None:
             out = [[self.word_vocab.get_label(w[0]),                 # token
@@ -45,25 +60,5 @@ class MasterVocab:
             warnings.warn("WARNING: MasterVocab does not have a generated vocab! Returning original input...")
             out = Xdata
         return out
-
-
-        # TESTING SHIT
-        def Testfunction55(dev_data, nlp):
-            # Quick-test cell!
-            if False:
-                tst_vocab = Vocab.from_iterable(["B-Process"], max_size = 3)
-                print(tst_vocab.map_to_index(["B-Process"]))
-                A = tst_vocab.map_to_index(["B-Process"])
-                print(tst_vocab.get_label(A[0]))
-                
-            if False:
-                vocab = MasterVocab(max_vocab_size = 4092)
-                vocab.generateVocabularies(dev_data, nlp)
-                dat = dev_data[list(dev_data.keys())[0]]
-                entities = entityLocator(dat)
-                xdata = inputPair(entities[0], entities[1], dat, nlp)
-                print(xdata)
-                x2data = vocab.transformX_toIndex(xdata)
-                print(x2data)
-                print(vocab.transformX_toLabel(x2data))
-        pass
+    #end-def
+#end-class
