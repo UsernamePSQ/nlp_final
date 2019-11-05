@@ -138,11 +138,11 @@ class WordEmbedder:
         
     def getEmbedding(self, word):
         if word in self.vmodel.vocab:
-            out = self.vmodel[word]
+            out = self.vmodel[word][:30]
             out = np.append(out, 0.0)
             return out
         else:
-            out = np.zeros(self.length)
+            out = np.zeros(self.length)[:30]
             out = np.append(out, 1.0)
             return out
 #end-class
