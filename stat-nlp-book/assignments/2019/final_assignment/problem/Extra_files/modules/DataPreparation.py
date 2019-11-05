@@ -138,17 +138,11 @@ class WordEmbedder:
         
     def getEmbedding(self, word):
         if word in self.vmodel.vocab:
-            return self.vmodel[word]
+            out = self.vmodel[word]
+            out = np.append(out, 0.0)
+            return out
         else:
-            return np.zeros(self.length)
+            out = np.zeros(self.length)
+            out = np.append(out, 1.0)
+            return out
 #end-class
-
-def createXEmbeddings(xdata, embedder, vocab_distances, vocab_entities, vocab_pos):
-    out = [[embedder.getEmbedding(w[0]), # w token
-            w[1], # dist 1
-            w[2], # dist 2
-            vocab_entities.map_to_index([w[3]])[0], #ent
-            vocab_pos.map_to_index([w[4]])[0], #pos
-            embedder.getEmbedding(w[5])] for w in xdata] # lemma
-    return out
-#end-def
