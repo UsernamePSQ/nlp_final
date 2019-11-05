@@ -122,7 +122,7 @@ def plot_correct_labels(df_err_an):
     tmp = df["True label"].groupby(df["Model"]).value_counts(normalize=False).rename("Number of correct labels").reset_index()
 
     ## Add empty row if doesn't exist
-    labels = ['NONE', 'Synonym', 'Hyponym', 'Hyponym_reverted']
+    labels = ['NONE', 'Synonym', 'Hyponym', 'Hypernym']
     models = ['None', 'Both', 'Base model', 'Weak model']
 
     for label in labels:
@@ -144,7 +144,7 @@ def plot_correct_labels(df_err_an):
         tmp.loc[tmp['True label'] == label,'Number of correct labels'] /= sum(df_correct_labels['True label'] == label)
 
     # Remove both and None because that is apparently too much
-    tmp = tmp.drop(tmp[(tmp['Model'] in ['Both','None'])].index)
+    tmp = tmp.drop(tmp[(tmp['Model'] ==  'Both') | (tmp['Model'] ==  'None')].index)
 
     #Plot the damn thing
     ax = sns.barplot(x="True label", y="Number of correct labels", hue="Model", data=tmp)
