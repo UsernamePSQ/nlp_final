@@ -30,7 +30,7 @@ def _sebastians_dummy_model(data_m_XY,data_raw):
             predictions.append("Synonym")
         # Check if entities are in hyponyms
         elif any([((entity_1 == rb[idx]) and (entity_2 in links[idx])) for idx in range(len(links))]):
-            predictions.append("Hyponym_reverted")
+            predictions.append("Hypernym")
         # Dette burde aldrig ske:
         elif any([((entity_2 == rb[idx]) and (entity_1 in links[idx])) for idx in range(len(links))]):
             raise Exception("This should never happen, because the data-set \

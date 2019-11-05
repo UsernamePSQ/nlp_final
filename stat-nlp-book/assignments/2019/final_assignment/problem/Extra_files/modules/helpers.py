@@ -3,7 +3,7 @@ from sklearn.metrics import precision_recall_fscore_support
 
 
 def f1_score_ala_calc_measures(y_true, y_pred):
-    targets = ["Hyponym", "Synonym", "Hyponym_reverted"]
+    targets = ["Hyponym", "Synonym", "Hypernym"]
     prec, recall, f1, support = precision_recall_fscore_support(
         y_true, y_pred, labels=targets, average=None)
     # unpack the precision, recall, f1 and support

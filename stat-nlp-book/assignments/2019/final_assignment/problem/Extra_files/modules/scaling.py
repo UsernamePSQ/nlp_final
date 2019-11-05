@@ -4,7 +4,7 @@ from collections import Counter
 
 def upscale(data_m_XY, scale_factor = 12):
     '''
-    This function upscales synonym, hyponym and hyponym_reverted with scale_factor
+    This function upscales synonym, hyponym and hypernym with scale_factor
     '''
     data_m_XY = deepcopy(data_m_XY)
 

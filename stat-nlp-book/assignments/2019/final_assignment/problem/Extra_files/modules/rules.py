@@ -98,7 +98,7 @@ def _add_weak_list_rules(data_m_XY, data_raw):
                     txt_Y[idx] = 'NONE'
                     data_m_XY['data_Y'][txt_indices[txt][idx]] = 'NONE'
             
-            ## If one is Hyponym or Hyponym_reverted, let them all damn be.
+            ## If one is Hyponym or Hypernym, let them all damn be.
             for idx in idxs_w_entities:
                 
                 if txt_Y[idx] == 'NONE':
@@ -106,7 +106,7 @@ def _add_weak_list_rules(data_m_XY, data_raw):
                 elif txt_Y[idx] == 'Hyponym':
                     relation = 'Hyponym'
                 else:
-                    relation = 'Hyponym_reverted'
+                    relation = 'Hypernym'
 
                 if entities[idx][0] in links:
                     other_idxs = [entities.index((ent,entities[idx][1])) for ent in links]
