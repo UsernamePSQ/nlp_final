@@ -1,7 +1,6 @@
 # DATA PREPARATION
 from statnlpbook.vocab import Vocab
-from gensim.models import fasttext
-from gensim.models import KeyedVectors
+from Extra_files.modules.WordEmbedder import WordEmbedder
 import copy
 import numpy as np
 
@@ -117,32 +116,3 @@ def inputPair(entityA, entityB, indata, nlp):
     #end-for
     return out
 #end-def
-
-# SETUP PRE-TRAINED-WORD-EMBEDDINGS
-
-# Create model
-class WordEmbedder:
-    def __init__(self):
-        self.vmodel = None
-        self.length = None
-
-    def buildModel(self, limit = 3000, pathToCreateModel = "engmodel.model", pathToLargeModel = 'wiki-news-300d-1M.vec'):
-        engmodel = KeyedVectors.load_word2vec_format(pathToLargeModel, limit=limit)
-        engmodel.save(pathToCreateModel)
-        self.vmodel = engmodel
-        self.length = len(self.vmodel.vectors[0])
-
-    def loadModel(self, pathToModel = "engmodel.model"):
-        self.vmodel = KeyedVectors.load(pathToModel)
-        self.length = len(self.vmodel.vectors[0])
-        
-    def getEmbedding(self, word):
-        if word in self.vmodel.vocab:
-            out = self.vmodel[word][:30]
-            out = np.append(out, 0.0)
-            return out
-        else:
-            out = np.zeros(self.length)[:30]
-            out = np.append(out, 1.0)
-            return out
-#end-class
