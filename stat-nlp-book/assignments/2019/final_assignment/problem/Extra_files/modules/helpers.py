@@ -2,7 +2,7 @@ from statnlpbook.scienceie import print_report
 from sklearn.metrics import precision_recall_fscore_support
 
 
-def f1_score_ala_calc_measures(y_true, y_pred):
+def f1_score_ala_calc_measures(y_true, y_pred, printing = True):
     targets = ["Hyponym", "Synonym", "Hypernym"]
     prec, recall, f1, support = precision_recall_fscore_support(
         y_true, y_pred, labels=targets, average=None)
@@ -24,10 +24,11 @@ def f1_score_ala_calc_measures(y_true, y_pred):
         'recall': recall,
         'f1-score': f1,
         'support': sum(support)}
-        
-    print_report(metrics, targets)
 
-    return metrics
+    if printing:
+        print_report(metrics, targets)
+
+    return metrics['overall']['f1_score']
 
 
 
