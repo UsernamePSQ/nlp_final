@@ -11,11 +11,42 @@ class WordEmbedder:
         self.pcaModel = None
         self.pcaLength = None
 
-    def buildModel(self, limit = 3000, pathToCreateModel = "engmodel.model", pathToFastText = 'wiki-news-300d-1M.vec'):
+    def buildModel(self, limit = 15000, pathToCreateModel = "Extra_files/resources/engmodel.model", pathToFastText = 'wiki-news-300d-1M.vec'):
         engmodel = KeyedVectors.load_word2vec_format(pathToFastText, limit=limit)
         # save and set model
         engmodel.save(pathToCreateModel)
         self.vmodel = engmodel
+        self.length = len(self.vmodel.vectors[0])
+
+    def buildModel_viaVocab(self, masterVocab, limit_ours = 15000, limit_large = 150000, info = True,
+                   pathToCreateModel = "Extra_files/resources/engmodel.model", pathToFastText = 'wiki-news-300d-1M.vec'):
+        # extract words from vocab
+        words = [masterVocab.word_vocab.get_label(i) for i in range(len(masterVocab.word_vocab))]
+        # load in the two models
+        ftmodel = KeyedVectors.load_word2vec_format(pathToFastText, limit=limit_large) # massive guy
+        ourmodel = KeyedVectors.load_word2vec_format(pathToFastText, limit=limit_ours) # our guy
+        # go through each word in vocab and add if possible
+        counter = 0
+        for w in words:
+            if w not in ourmodel.vocab and w in ftmodel.vocab:
+                counter = counter + 1
+                # add it
+                ourmodel.add(w, ftmodel[w])
+        #end-for
+        print("Model built. Added a total of counter %s words to our vocab from larger model" % (counter))
+        if info == True:
+            counter = 0
+            for w in words:
+                if w in ourmodel.vocab:
+                    counter = counter + 1
+                #end-if
+            #end-for
+            print("MasterVocab size: %s, MasterVocab words in our FastText Vocab %s, coverage: %s" % (len(words), counter, (counter+0.0)/(0.0+len(words))))
+        pass
+
+        # save and set model
+        ourmodel.save(pathToCreateModel)
+        self.vmodel = ourmodel
         self.length = len(self.vmodel.vectors[0])
 
     def loadModel(self, pathToModel = "Extra_files/resources/engmodel.model"):
@@ -35,12 +66,13 @@ class WordEmbedder:
         self.pcaModel = pca
         self.pcaLength = n_components
 
-    def fitPCA_viaVocab(self, mastervocab, n_components):
+    def fitPCA_viaVocab(self, mastervocab, n_components, include_oov = False):
         '''
         This functions extracts all words form vocab and fits the PCA with those
         '''
         # get all words from vocab:
-        words = [mastervocab.word_vocab.get_label(i) for i in range(len(mastervocab.word_vocab))]
+        words = [mastervocab.word_vocab.get_label(i) for i in range(len(mastervocab.word_vocab))
+                 if mastervocab.word_vocab.get_label(i) in self.vmodel.vocab]
         self.fitPCA(words, n_components)
         # et Voila!
 

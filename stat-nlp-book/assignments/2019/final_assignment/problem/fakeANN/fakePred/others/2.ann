@@ -1,0 +1,3 @@
+T1	Task 910 937	predict corrosion behaviour
+R1	Hyponym-of Arg1:T1 Arg2:T2	
+*	Synonym-of T1 T2
