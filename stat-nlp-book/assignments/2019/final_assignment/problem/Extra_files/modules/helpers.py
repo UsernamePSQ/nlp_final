@@ -28,7 +28,7 @@ def f1_score_ala_calc_measures(y_true, y_pred, printing = True):
     if printing:
         print_report(metrics, targets)
 
-    return metrics['overall']['f1_score']
+    return metrics['overall']['f1-score']
 
 
 
