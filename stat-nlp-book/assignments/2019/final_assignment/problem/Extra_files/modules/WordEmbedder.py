@@ -18,7 +18,7 @@ class WordEmbedder:
         self.vmodel = engmodel
         self.length = len(self.vmodel.vectors[0])
 
-    def buildModel_viaVocab(self, masterVocab, limit_ours = 15000, limit_large = 150000, info = True,
+    def buildModel_viaVocab(self, masterVocab, limit_ours = 15000, limit_large = 350000, info = True,
                    pathToCreateModel = "Extra_files/resources/engmodel.model", pathToFastText = 'wiki-news-300d-1M.vec'):
         # extract words from vocab
         words = [masterVocab.word_vocab.get_label(i) for i in range(len(masterVocab.word_vocab))]
