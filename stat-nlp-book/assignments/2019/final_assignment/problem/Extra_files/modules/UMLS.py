@@ -32,7 +32,23 @@ def add_UMLS(data):
             data['UMLS'].append('NONE')
     return data
 
-    
+
+def load_UMLS():
+    # Load raw file
+    with open("Extra_files/data/UMLS_relations.txt","r") as file:
+        tmp = file.readlines()[0]
+        
+    # Restructure
+    split = tmp.split('|')
+    del split[-1]
+    assert len(split) % 3 == 0
+    relations = np.array(split).reshape((int(len(split) / 3),3))
+
+    # Extract hyponyms ('isa')
+    hyponyms = [(rel[0].lower(),rel[2].lower()) for rel in relations if rel[1] == 'isa']
+
+    return hyponyms
+
 ### Bonus function for adding UMLS
 def _extract_entity_pairs(data_X):
     entity_pairs = []

@@ -13,7 +13,7 @@ def save_to_ann(data, datadfir):
         data: {'txt': {'relations': [('R5', 'Hyponym', 'T14', 'T17'), ('*', 'Synonym', 'T20', 'T19')]}}
         datadir: The directory to save to, e.g. data/scienceie/predictions
     """
-
+    print("Importing " + datadfir.split("/")[-1] + "...")
     for txt, df in data.items():
 
         #print(df.keys())
@@ -83,6 +83,7 @@ def load_scienceie(datadir):
     ann_lines_after_id = 0
 
     for i in range(len(txt_files)):
+
         org_text = load_txt_str(txt_files[i], datadir)
         tokens, locations = split_txt_str(org_text)
         starting_locations = np.array([loc[0] for loc in locations])
@@ -94,7 +95,7 @@ def load_scienceie(datadir):
         
         relations = []
         my_ann_names = []
-        
+  
         if ann_file_exists:
 
             ann_content = load_ann_file(ann_files[i],datadir)
@@ -104,7 +105,7 @@ def load_scienceie(datadir):
             ann_lines_after_sort += len(sorted_annotation)
 
             entity_types, entity_words, ann_names, entity_locations = ann_to_entities(sorted_annotation)
-            
+
             for line in range(len(ann_names)):
                 starting_loc = entity_locations[line][0]
                 ending_loc = entity_locations[line][1]

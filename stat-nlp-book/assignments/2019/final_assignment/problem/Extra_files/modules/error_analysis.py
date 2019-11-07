@@ -12,6 +12,7 @@ import seaborn as sns
 import matplotlib as mpl
 import importlib
 
+sns.reset_orig()
 
 def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
     '''
@@ -54,7 +55,12 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
         entity_1_end = index_start + index_for_next
         
         ## Find second entity
-        index_ent2_begin = B_indices[data[txt]['annotation_names'].index(T2)]
+        try:
+            index_ent2_begin = B_indices[data[txt]['annotation_names'].index(T2)]
+        except Exception as e:
+            print(metadata[idx])
+            print(data[txt]['annotation_names'])
+            raise e
         if index_ent2_begin == len(data[txt]['tokens']) - 1:
             index_end = index_ent2_begin
         else:
@@ -96,13 +102,15 @@ def get_dataframe(data, data_m_XY, y_true, y_base, y_weak):
     #Append the y's
     df_err_an['True label'] = y_true
     df_err_an['Base label'] = y_base
-    df_err_an['Weak learning label'] = y_weak
+    df_err_an['Weak supervision label'] = y_weak
 
     return df_err_an
 
 
 def plot_correct_labels(df_err_an):
+
     importlib.reload(sns)
+
     pd.options.mode.chained_assignment = None  # Remove .loc-warnings from pandas
 
     # Create column indicating the wrong model
@@ -110,10 +118,10 @@ def plot_correct_labels(df_err_an):
 
     df_correct_labels['Model'] = 'Both'
     df_correct_labels.loc[(df_correct_labels['True label'] == df_correct_labels['Base label']) & \
-                        (df_correct_labels['True label'] != df_correct_labels['Weak learning label']) ,'Model'] = 'Base model'
-    df_correct_labels.loc[(df_correct_labels['True label'] == df_correct_labels['Weak learning label']) & \
+                        (df_correct_labels['True label'] != df_correct_labels['Weak supervision label']) ,'Model'] = 'Base model'
+    df_correct_labels.loc[(df_correct_labels['True label'] == df_correct_labels['Weak supervision label']) & \
                         (df_correct_labels['True label'] != df_correct_labels['Base label']) ,'Model'] = 'Weak model'
-    df_correct_labels.loc[(df_correct_labels['True label'] != df_correct_labels['Weak learning label']) & \
+    df_correct_labels.loc[(df_correct_labels['True label'] != df_correct_labels['Weak supervision label']) & \
                         (df_correct_labels['True label'] != df_correct_labels['Base label']) ,'Model'] = 'None'
 
     warnings.filterwarnings('ignore') #Seaborn gets warning, but not a problem
@@ -166,6 +174,7 @@ def plot_confusion_matrix(y_true, y_pred, n_labels = None,
     Normalization can be applied by setting `normalize=True`.
     """
     sns.reset_orig()
+
     if normalize:
         title = 'Normalized confusion matrix'
     else:
